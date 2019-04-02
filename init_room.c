@@ -36,6 +36,18 @@ t_tbhash	****init_field(int n_r, int n_x_y[])
 	return (field);
 }
 
+short 		**init_mtrx(int num_rooms)
+{
+	short	**x;
+	int		i;
+
+	i = -1;
+	CH_NULL(x = (short **)malloc(sizeof(short *) * num_rooms));
+	while (++i < num_rooms)
+		CH_NULL(x[i] = (short *)ft_memalloc(sizeof(short) * num_rooms));
+	return (x);
+}
+
 t_tbhash	*init_room(void)
 {
 	t_tbhash		*new;

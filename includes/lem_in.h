@@ -6,15 +6,15 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 19:52:52 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/02 12:03:19 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/02 18:21:38 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _LEM_IN_H
 # define _LEM_IN_H
 
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
-# define MAP "/Users/gleonett/Desktop/lem_in/maps/map3"
+# define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
+//# define MAP "/Users/gleonett/Desktop/lem_in/maps/map3"
 # define NUM_ROOMS 9975
 # define NUM_LINKS 20
 # define SIZE_MTRX 1000
@@ -39,7 +39,7 @@
 
 typedef struct		s_mtrx
 {
-	short 			mtrx[SIZE_MTRX][SIZE_MTRX];
+	short 			**mtrx;
 	int				num_a_r[2];
 }					t_mtrx;
 
@@ -72,11 +72,14 @@ int					valid_room(char const *s, t_tbhash **th, size_t pow_p[],
 int					collision(t_tbhash **th, int res, t_tbhash *room);
 int					check_comment(char **line, t_tbhash **th, size_t pow_p[],
 						int fd);
-int					valid_links(t_tbhash **th, size_t pow_p[], const char *s);
+int					valid_links(t_tbhash **th, size_t pow_p[], const char *s,
+						short **mtrx);
 t_tbhash			*init_room(void);
+short				**init_mtrx(int num_rooms);
 t_tbhash			****init_field(int n_r, int n_x_y[]);
 void				del_tables(t_tbhash ***th, t_tbhash *****field, int n_r,
 						int n_x_y[]);
+void				del_mtrx(t_mtrx *mtrx);
 void				del_room(t_tbhash **room);
 void				power_p(size_t pow_p[]);
 size_t				power_p_more(size_t max_p, size_t i);

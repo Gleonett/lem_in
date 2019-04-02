@@ -63,3 +63,14 @@ void		del_tables(t_tbhash ***th, t_tbhash *****field, int n_r, int n_xy[])
 	if (field != NULL)
 		del_field(field, n_r, n_xy);
 }
+
+
+void		del_mtrx(t_mtrx *mtrx)
+{
+	int i;
+
+	i = -1;
+	while (++i < mtrx->num_a_r[1])
+		ft_memdel((void **)mtrx->mtrx + i);
+	ft_memdel((void**)&(mtrx->mtrx));
+}
