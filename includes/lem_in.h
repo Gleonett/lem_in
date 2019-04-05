@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 19:52:52 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/02 18:21:38 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/04 18:45:54 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/map3"
+//# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map"
 # define NUM_ROOMS 9975
 # define NUM_LINKS 20
 # define SIZE_MTRX 1000
@@ -24,8 +25,14 @@
 # define FINISH (th[NUM_ROOMS - 1])
 # define Q_ADD 0
 # define Q_GET 1
-# define X p_x - 1
-# define Y p_y - 1
+
+# define XP_YM 1
+# define Z_PL 2
+# define X_PL 3
+# define Y_MI 4
+# define Y_PL 5
+# define X_MI 6
+# define XM_YP 7
 
 # define MOD(x) (x >= 0 ? x : x * -1)
 # define IF_TRUE_RET(x, y, z) if (x == 1) ({ft_memdel((void **)y); return (z);})
@@ -37,15 +44,11 @@
 
 # include "ft_printf.h"
 
-typedef struct		s_mtrx
-{
-	short 			**mtrx;
-	int				num_a_r[2];
-}					t_mtrx;
-
 typedef	struct		s_tbhash
 {
 	char			*room;
+	int 			num_ant;
+
 	short			place_mtrx;
 	short			p_x;
 	short			p_y;
@@ -54,16 +57,28 @@ typedef	struct		s_tbhash
 	short			true_way;
 	struct s_tbhash	**links;
 	struct s_tbhash	*next;
-	struct s_tbhash	*way;
+	struct s_tbhash	*ways;
 	struct s_tbhash	*queue_prev;
 	int				x;
 	int				y;
 }					t_tbhash;
 
+typedef struct		s_mtrx
+{
+	short 			**mtrx;
+	int				num_a_r[2];
+	t_tbhash		*start;
+	t_tbhash		*finish;
+}					t_mtrx;
+
 /*
 ** функции под вопросом
 */
 void				sort_links(t_tbhash **th, t_tbhash *room, t_tbhash *bf);
+
+void				stream(t_tbhash ****field, t_mtrx mtrx, t_tbhash **moves);
+int					prep_stream(t_tbhash ****field, t_tbhash *start,
+						t_tbhash *finish, t_mtrx mtrx);
 
 int					reader(t_tbhash **th, size_t *pow_p, t_mtrx *mtrx);
 int					str_is_int(const char *str);

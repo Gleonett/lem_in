@@ -6,7 +6,7 @@
 /*   By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:49:30 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/02 11:04:15 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/04 16:19:24 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_tbhash	****init_field(int n_r, int n_x_y[])
 {
-	const int	n_z = n_r - n_x_y[0] - n_x_y[1];
+	const int	n_z = n_r - n_x_y[0] - n_x_y[1] + 4;
 	t_tbhash	****field;
 	int			i;
 	int			j;
@@ -24,12 +24,13 @@ t_tbhash	****init_field(int n_r, int n_x_y[])
 	while (++i < n_x_y[0])
 	{
 		CH_NULL(field[i] = (t_tbhash ***)malloc(sizeof(t_tbhash **) *
-				(n_x_y[1])));
+		(n_x_y[1])));
 		j = -1;
 		while (++j < n_x_y[1])
 		{
-			CH_NULL(field[i][j] = (t_tbhash **)malloc(sizeof(t_tbhash *) *
-					n_z));
+			if ((field[i][j] = (t_tbhash **)malloc(sizeof(t_tbhash *) *
+			n_z)) == NULL)
+				exit(-1);
 			field[i][j][0] = NULL;
 		}
 	}
@@ -60,7 +61,8 @@ t_tbhash	*init_room(void)
 	new->queue_prev = NULL;
 	new->room = NULL;
 	new->next = NULL;
-	new->way = NULL;
+	new->ways = NULL;
+	new->num_ant = 0;
 	new->place_mtrx = place++;
 	new->true_way = 0;
 	new->p_x = -1;

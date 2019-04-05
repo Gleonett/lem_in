@@ -6,7 +6,7 @@
 /*   By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 12:09:18 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/02 11:04:15 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/04 14:21:25 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,43 +70,9 @@ void			add_links_queue_2(t_tbhash *room, t_tbhash *finish)
 	}
 }
 
-
-void	print_field(t_tbhash ****field, int num_rooms, int num_x, int num_y)
-{
-	int x;
-	int y;
-	int z;
-	int flag;
-
-	flag = 0;
-	y = num_y;
-	while (--y > -1)
-	{
-//		while (flag != 1 && field[0][y][0] == NULL)
-//			y--;
-//		flag = 1;
-		x = -1;
-		while (++x < num_x)
-		{
-			printf("[");
-			z = -1;
-			while (field[x][y][++z] != NULL)
-				if (z == 0)
-					printf(GREEN"%*s"REBOOT, field[x][y][z + 1] == NULL ? 6 : 3,
-						field[x][y][z] == NULL ? NULL : field[x][y][z]->room);
-				else
-					printf(PURPLE"%3s"REBOOT, field[x][y][z]->room);
-			if (z == 0 && field[x][y][z] == NULL)
-				printf("%6s", "");
-			printf("]");
-		}
-		printf("\n");
-	}
-}
-
 void	insert_in_field(t_tbhash ****field, t_tbhash *room)
 {
-	int			z;
+	short		z;
 	t_tbhash	*buf;
 
 	if (room->p_x < 0 || room->p_y < 0)
@@ -116,8 +82,13 @@ void	insert_in_field(t_tbhash ****field, t_tbhash *room)
 	while (field[room->p_x][room->p_y][++z] != NULL)
 	{
 		if (field[room->p_x][room->p_y][z]->num_links > room->num_links)
-			ft_swap((void **)(field[room->p_x][room->p_y] + z), (void **)&buf);
+		{
+			buf->p_z = z;
+			ft_swap((void **) field[room->p_x][room->p_y] + z, (void **)
+					&buf);
+		}
 	}
+	buf->p_z = z;
 	field[room->p_x][room->p_y][z] = buf;
 	field[room->p_x][room->p_y][z + 1] = NULL;
 }
@@ -170,6 +141,5 @@ int				bfs(t_tbhash **th, t_tbhash *****field, int n_x_y[2],
 		add_links_queue_3(room);
 		insert_in_field(*field, room);
 	}
-	print_field(*field, mtrx.num_a_r[1], n_x_y[0], n_x_y[1]);
 	return (0);
 }
