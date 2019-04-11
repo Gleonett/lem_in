@@ -49,7 +49,7 @@ void		del_field(t_tbhash *****field, int n_r, int n_x_y[])
 	ft_memdel((void **)field);
 }
 
-void		del_tables(t_tbhash ***th, t_tbhash *****field, int n_r, int n_xy[])
+void		del_tables(t_tbhash ***th, int n_r, int n_xy[])
 {
 	int i;
 
@@ -60,8 +60,6 @@ void		del_tables(t_tbhash ***th, t_tbhash *****field, int n_r, int n_xy[])
 	(*th)[NUM_ROOMS - 2] = NULL;
 	(*th)[NUM_ROOMS - 1] = NULL;
 	ft_memdel((void **)th);
-	if (field != NULL)
-		del_field(field, n_r, n_xy);
 }
 
 

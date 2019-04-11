@@ -6,7 +6,7 @@
 /*   By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:44:05 by gleonett          #+#    #+#             */
-/*   Updated: 2019/03/24 16:33:07 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/05 17:30:42 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ static void	init_links(t_tbhash **room1, t_tbhash **room2, short **mtrx)
 		add_size(room2);
 	(*room1)->links[(*room1)->num_links - 1] = *room2;
 	(*room2)->links[(*room2)->num_links - 1] = *room1;
-	mtrx[(*room1)->place_mtrx][(*room2)->place_mtrx] = 1;
-	mtrx[(*room2)->place_mtrx][(*room1)->place_mtrx] = 1;
+//	mtrx[(*room1)->place_mtrx][(*room2)->place_mtrx] = 1;
+//	mtrx[(*room2)->place_mtrx][(*room1)->place_mtrx] = 1;
 	(*room1)->links[(*room1)->num_links] = NULL;
 	(*room2)->links[(*room2)->num_links] = NULL;
 }

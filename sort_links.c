@@ -6,35 +6,45 @@
 /*   By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:28:16 by gleonett          #+#    #+#             */
-/*   Updated: 2019/03/30 17:02:24 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/05 16:47:32 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "lem_in.h"
 
-void	final_room(t_tbhash **links, int num_links)
+void	smallest_connectivity(t_tbhash **links, short num)
 {
-	int i;
-	int j;
+	short i;
+	short j;
 
 	i = -1;
-	j = 0;
-	while (++i < num_links)
+	while (++i + 1 < num)
 	{
-		if (links[i]->true_way == 1)
+		j = i;
+		while (j > -1 && links[j]->p_x == links[j + 1]->p_x)
 		{
-			if (links[j] == NULL)
-			{
-				links[j] = links[i];
-				links[i] = NULL;
-			}
-			else
-				while (j < i && links[j] != NULL)
-					j++;
+			if (links[j]->num_links > links[j + 1]->num_links)
+				ft_swap((void **)links + j, (void **)links + j + 1);
+			j--;
 		}
-		else
-			links[i] = NULL;
+	}
+}
+
+void	sort(t_tbhash **links, short num)
+{
+	short i;
+	short j;
+
+	i = -1;
+	while (++i + 1 < num)
+	{
+		j = i;
+		while (j > -1 && links[j]->p_x > links[j + 1]->p_x)
+		{
+			ft_swap((void **)links + j, (void **)links + j + 1);
+			j--;
+		}
 	}
 }
 
@@ -43,7 +53,6 @@ void	start_room(t_tbhash *room)
 	int i;
 	int j;
 	int num;
-	t_tbhash *lol;
 
 	i = -1;
 	j = 0;
@@ -65,16 +74,17 @@ void	start_room(t_tbhash *room)
 			}
 	}
 	room->num_links -= num;
+	sort(room->links, room->num_links);
+	smallest_connectivity(room->links, room->num_links);
 }
 
-void	sort_links(t_tbhash **th, t_tbhash *room, t_tbhash *start)
+void	sort_links(t_tbhash **th, t_tbhash *room)
 {
-	int i;
-	int j;
-
-	i = -1;
-	j = 0;
-	if (room == start)
+	if (room == START)
 		start_room(room);
-//	else if ()
+	else
+	{
+		sort(room->links, room->num_links);
+		smallest_connectivity(room->links, room->num_links);
+	}
 }

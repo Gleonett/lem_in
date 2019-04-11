@@ -6,7 +6,7 @@
 /*   By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 16:04:45 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/02 18:21:38 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/05 17:24:46 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	reader(t_tbhash **th, size_t *pow_p, t_mtrx *mtrx)
 			if (flag == 0 && valid_room(line, th, pow_p, 0) == 1)
 			{
 				flag++;
-				mtrx->mtrx = init_mtrx(mtrx->num_a_r[1]);
+//				mtrx->mtrx = init_mtrx(mtrx->num_a_r[1]);
 				IF_TRUE_RET(valid_links(th, pow_p, line, mtrx->mtrx),
 						&line, -1);
 			}

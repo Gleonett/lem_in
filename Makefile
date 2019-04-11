@@ -6,7 +6,7 @@
 #    By: gleonett <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/13 19:31:05 by gleonett          #+#    #+#              #
-#    Updated: 2019/04/01 15:29:33 by gleonett         ###   ########.fr        #
+#    Updated: 2019/04/05 16:55:21 by gleonett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ LIB		= ft_printf
 INC		= includes
 LINC 	= ft_printf/libftprintf.a
 SRCS 	= bfs.c           collision.c     init_room.c     pow_p.c         sort_links.c    valid_room.c \
-			check_comment.c del_table.c     main.c          reader.c        valid_links.c
+		prep_stream.c	check_comment.c del_table.c     main.c          reader.c        valid_links.c
 RAW_OBJ		= $(SRCS:.c=.o)
 DOBJ	= obj
 FLAGS	= ""
