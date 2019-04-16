@@ -69,6 +69,6 @@ void		del_mtrx(t_mtrx *mtrx)
 
 	i = -1;
 	while (++i < mtrx->num_a_r[1])
-		ft_memdel((void **)mtrx->mtrx + i);
-	ft_memdel((void**)&(mtrx->mtrx));
+		ft_memdel((void **)mtrx->ways + i);
+	ft_memdel((void**)&(mtrx->ways));
 }

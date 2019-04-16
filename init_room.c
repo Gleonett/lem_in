@@ -42,6 +42,7 @@ t_tbhash	*init_room(void)
 	new->true_way = 0;
 	new->p_x = -1;
 	new->p_y = -1;
+	new->p_z = -1;
 	new->flag = -1;
 	new->num_links = 0;
 	new->x = -1;

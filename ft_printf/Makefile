@@ -6,7 +6,7 @@
 #    By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/28 16:05:16 by gleonett          #+#    #+#              #
-#    Updated: 2019/03/04 18:05:38 by gleonett         ###   ########.fr        #
+#    Updated: 2019/04/14 11:42:12 by gleonett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS = *.c get_types/*.c utils/*.c va_functions/*.c print/*.c \
 INC = ../includes
 LINC = ../libft/libft.a
 OBJ = ../libft/*.o *.o
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -Ofast
 
 all: $(NAME)
 

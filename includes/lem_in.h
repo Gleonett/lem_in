@@ -6,16 +6,18 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 19:52:52 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/11 18:48:56 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/16 17:56:17 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _LEM_IN_H
 # define _LEM_IN_H
 
-# define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/map3"
+//# define MAP "/Users/gleonett/Desktop/lem_in/maps/lol_map"
+//# define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map"
+# define MAP "/Users/gleonett/Desktop/lem_in/maps/map3"
+//# define MAP "/Users/gleonett/Desktop/lem_in/maps/jest'"
 # define NUM_ROOMS 9975
 # define NUM_LINKS 20
 # define SIZE_MTRX 1000
@@ -44,6 +46,7 @@ typedef	struct		s_tbhash
 	short			place_mtrx;
 	short			p_x;
 	short			p_y;
+	short			p_z;
 	short			flag;
 	short			num_links;
 	short			true_way;
@@ -55,48 +58,24 @@ typedef	struct		s_tbhash
 	int				y;
 }					t_tbhash;
 
-typedef struct		s_bigrph
-{
-	t_tbhash		***bi_graph;
-}					t_bigrph;
-
 typedef struct		s_mtrx
 {
-	short 			**mtrx;
+	short 			**ways;
+	short 			**final_ways;
+	short 			*num_lvls;
+	short 			*baned_lvls;
 	int				num_a_r[2];
-	t_tbhash		*start;
-	t_tbhash		*finish;
 }					t_mtrx;
-
-typedef struct		s_ways
-{
-	t_tbhash		*room;
-	struct s_ways	*ant;
-	struct s_ways	*next;
-	struct s_ways	*back;
-}					t_ways;
-
-typedef struct		s_turn
-{
-	t_tbhash		*room;
-	struct s_turn	*next;
-}					t_turn;
-
-typedef struct		s_moves
-{
-	short			move;
-	t_turn			*turns;
-	struct s_move	*next;
-}					t_moves;
 
 /*
 ** функции под вопросом
 */
-void	print_bigraph(t_tbhash ***bigr, int num_a_r[2]);
-void	sort_links(t_tbhash **th, t_tbhash *room);
+void				print_mtrx(short **mtrx, int num);
+void				print_bigraph(t_tbhash ***bigr, int num_a_r[2]);
+void				sort_links(t_tbhash **th, t_tbhash *room);
 
-void				stream(t_mtrx mtrx, t_tbhash **moves);
-int					prep_stream(t_tbhash *start, t_tbhash *finish, t_mtrx mtrx);
+short				**prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2]);
+void		 		prep_brute_force(t_tbhash **th, t_mtrx *ways);
 
 int					reader(t_tbhash **th, size_t *pow_p, t_mtrx *mtrx);
 int					str_is_int(const char *str);
@@ -116,5 +95,5 @@ void				power_p(size_t pow_p[]);
 size_t				power_p_more(size_t max_p, size_t i);
 int					skip_spaces(const char *str, int *i);
 
-int					bfs(t_tbhash **th, t_bigrph *b_g, int n_x_y[2], t_mtrx	mtrx);
+int					bfs(t_tbhash **th, int n_x_y[2], t_mtrx	mtrx);
 #endif

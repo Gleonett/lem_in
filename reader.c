@@ -80,11 +80,11 @@ int	reader(t_tbhash **th, size_t *pow_p, t_mtrx *mtrx)
 			{
 				flag++;
 //				mtrx->mtrx = init_mtrx(mtrx->num_a_r[1]);
-				IF_TRUE_RET(valid_links(th, pow_p, line, mtrx->mtrx),
+				IF_TRUE_RET(valid_links(th, pow_p, line, mtrx->ways),
 						&line, -1);
 			}
 			else if (flag != 0)
-				IF_TRUE_RET(valid_links(th, pow_p, line, mtrx->mtrx),
+				IF_TRUE_RET(valid_links(th, pow_p, line, mtrx->ways),
 						&line, -1);
 		}
 		else

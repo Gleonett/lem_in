@@ -6,7 +6,7 @@
 #    By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/29 11:47:02 by gleonett          #+#    #+#              #
-#    Updated: 2018/11/29 11:49:34 by gleonett         ###   ########.fr        #
+#    Updated: 2019/04/14 11:42:12 by gleonett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libft.a
 SRC = *.c
 INC = ../includes
 OBJ = *.o
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -Ofast
 
 all: $(NAME)
 
