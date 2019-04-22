@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:12:33 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/22 19:12:58 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/22 20:25:59 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	fill_full_turns(char ***final_ways, char **str_ants, t_mtrx *mtrx,
 
 	i = -1;
 	flag = -1;
-	if (final_ways[0][shift] == NULL)
+	if (final_ways[mtrx->num_ways - 1][shift] == NULL)
 		return (1);
 	while (flag < mtrx->num_ways && last_ant > 0)
 	{
