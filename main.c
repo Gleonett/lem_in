@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 19:41:57 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/14 17:59:24 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/18 17:53:10 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_mtrx(short **mtrx, int num)
 
 	i = -1;
 	printf("\n");
-	while (++i < num && mtrx[i] != NULL)
+	while (++i < num && mtrx[i][num - 1] != 0 && mtrx[i] != NULL)
 	{
 		j = -1;
 		while (++j < num)
@@ -49,7 +49,7 @@ int	main(void)
 	NULL || START->num_links == 0 || FINISH->num_links == 0)
 	{
 		gc(NULL, GC_ALL, GC_DEL);
-		del_tables(&th, mtrx.num_a_r[1], 0);
+		del_tables(&th);
 //		del_mtrx(&mtrx);
 		ft_printf(RED"error"REBOOT": wrong input.\n");
 		return (1);
@@ -59,8 +59,9 @@ int	main(void)
 	gc(NULL, GC_ALL, GC_DEL);
 	prep_dfs(th, &mtrx, mtrx.num_a_r);
 	prep_brute_force(th, &mtrx);
+	distribution_ants(th, &mtrx);
 //	print_mtrx(mtrx);
-	del_tables(&th, mtrx.num_a_r[1], n_x_y);
+//	del_tables(&th, mtrx.num_a_r[1], n_x_y);
 //	del_mtrx(&mtrx);
 	return (0);
 }

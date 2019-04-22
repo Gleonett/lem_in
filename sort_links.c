@@ -6,7 +6,7 @@
 /*   By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/25 15:28:16 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/14 11:53:33 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/18 16:34:12 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	start_room(t_tbhash *room)
 	smallest_connectivity(room->links, room->num_links);
 }
 
-void	del_links(t_tbhash *finish, t_tbhash *room)
+void	del_links_left(t_tbhash *finish, t_tbhash *room)
 {
 	int i;
 	int j;
@@ -130,17 +130,48 @@ void	finish_room(t_tbhash *finish)
 	}
 }
 
+void	del_links_right(t_tbhash *finish, t_tbhash *room)
+{
+	int i;
+	int j;
+	int num;
+
+	i = -1;
+	j = 0;
+	num = 0;
+	while (++i < room->num_links)
+	{
+		while (j < i && room->links[j] != NULL)
+			j++;
+		if (((room->p_x > room->links[i]->p_x && room->p_y >room->links[i]->p_y)
+		|| (room->p_x == room->links[i]->p_x && room->p_y < room->links[i]->p_y)
+		|| (room->p_x > room->links[i]->p_x && room->p_y <= room->links[i]->p_y)
+		) && room->links[i] != finish)
+		{
+			room->links[i] = NULL;
+			num++;
+		}
+		if (room->links[j] == NULL)
+			ft_swap((void **)room->links + j, (void **)room->links + i);
+	}
+	room->num_links -=num;
+}
+
 void	sort_links(t_tbhash **th, t_tbhash *room)
 {
 	if (room == START)
 		start_room(room);
 	else if (room == FINISH)
-	{
 		finish_room(room);
-	}
+//	else if (room->p_x >= START->p_x)
+//	{
+//		del_links_right(FINISH, room);
+//		sort(room->links, room->num_links);
+//		smallest_connectivity(room->links, room->num_links);
+//	}
 	else
 	{
-		del_links(FINISH, room);
+		del_links_left(FINISH, room);
 		sort(room->links, room->num_links);
 		smallest_connectivity(room->links, room->num_links);
 	}

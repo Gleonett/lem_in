@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 17:59:44 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/16 17:54:20 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/18 19:48:23 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static short	*g_baned_lvls;
 static int		g_len;
 static short	g_bad_lvl;
 
-void line_print(short *line)
-{
-	int i = -1;
-	while (++i < g_len)
-		ft_printf("%2d ", line[i]);
-}
+//void line_print(short *line)
+//{
+//	int i = -1;
+//	while (++i < g_len)
+//		ft_printf("%2d", line[i]);
+//}
 
 short		brute_force(short *prev_line,  short lvl, short len)
 {
@@ -38,12 +38,15 @@ short		brute_force(short *prev_line,  short lvl, short len)
 		return (brute_force(prev_line, lvl + (short)1, len));
 	else if (g_num_lvls[lvl] == -1)
 	{
-		ft_printf(YELLOW"final way ! \n");
-		line_print(prev_line);
-		ft_printf("\n"REBOOT);
+//		ft_printf(YELLOW"final way ! \n");
+//		line_print(prev_line);
+//		ft_printf("\n"REBOOT);
 		return (0);
 	}
-	i = g_num_lvls[lvl - 1];
+	j = lvl - (short)1;
+	while (j > 0 && g_num_lvls[j] == 0)
+		j--;
+	i = g_num_lvls[j];
 	while (i < g_num_lvls[lvl])
 	{
 		CH_NULL(line = (short *)malloc(sizeof(short) * g_len));
@@ -115,15 +118,19 @@ void	 		prep_brute_force(t_tbhash **th, t_mtrx *ways)
 	g_final_ways = ways->final_ways;
 	g_baned_lvls = ways->baned_lvls;
 	CH_NULL(line = (short *)ft_memalloc(sizeof(short) * g_len));
-	calc_lvls(g_num_lvls, START->num_links + 2, g_ways, ways->num_a_r[1] - 1);
+	calc_lvls(g_num_lvls, ways->num_links + 1, g_ways, ways->num_a_r[1] - 1);
 //	print_mtrx(ways, num_a_r[1] + 1);
 	while (brute_force(line, 1, 0) != 0)
 	{
-		printf("--------------------------------------------------\n");
+		ft_printf("++++++++++++++++++++++++++++++++++++++++++++++\n");
 		g_baned_lvls[g_bad_lvl] = 1;
 		g_bad_lvl = -1;
 	}
 	print_ways();
+	short i = -1;
+	while (g_final_ways[++i] != NULL)
+		;
+	ways->num_ways = i;
 //	print_mtrx(ways, num_a_r[1] + 1);
 }
 
@@ -133,26 +140,41 @@ int calc_lvls(short *g_num_lvls, int num, short **ways, int j)
 {
 	int i;
 	int k;
+	int l;
 
 	i = -1;
-	k = 0;
+	k = 1;
 	g_num_lvls[num - 1] = -1;
-	while (++i < j)
+	while (++i < j - 1)
 	{
-		ft_printf(RED"%d "REBOOT, g_num_lvls[0]);
-		ft_printf("%d\n", ways[i][j]);
 		if (ways[i][j] == 0)
+		{
 			continue ;
-		if (k != ways[i][j])
-			g_num_lvls[ways[i][j]] = g_num_lvls[ways[i][j] - 1];
-		k = ways[i][j];
+		}
+//		ft_printf("%d\n", ways[i][j]);
+		if (k > 0 && ways[i][j] != 0 && k != ways[i][j])
+		{
+			l = k;
+			while (k > 1 && g_num_lvls[l] == 0)
+				l--;
+//			ft_printf("l = %d : %d\n", l, g_num_lvls[l]);
+			g_num_lvls[ways[i][j]] = g_num_lvls[l];
+			k = ways[i][j];
+		}
 		g_num_lvls[ways[i][j]] += 1;
 	}
+	i = num - 2;
+	while (g_num_lvls[i] == 0)
+		i--;
+	g_num_lvls[i + 1] = -1;
 	i = -1;
-	ft_printf("\n");
-	while (++i < num)
-		ft_printf("%d\n", g_num_lvls[i]);
-	ft_printf("\n");
+//	ft_printf("\n");
+//	while (++i < num)
+//		if (g_num_lvls[i] == -1)
+//			break ;
+//		else
+//			ft_printf("lvl = [%d] : %d\n", i, g_num_lvls[i]);
+//	ft_printf("\n");
 //	g_num_lvls[0] = 1;
 	return (i);
 }

@@ -6,7 +6,7 @@
 #    By: gleonett <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/13 19:31:05 by gleonett          #+#    #+#              #
-#    Updated: 2019/04/16 09:52:15 by gleonett         ###   ########.fr        #
+#    Updated: 2019/04/19 17:18:43 by gleonett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,10 @@ NAME	= lem_in
 LIB		= ft_printf
 INC		= includes
 LINC 	= ft_printf/libftprintf.a
-SRCS 	= bfs.c           collision.c     init_room.c     pow_p.c         sort_links.c    valid_room.c \
-		prep_stream.c	check_comment.c del_table.c     main.c          reader.c        valid_links.c \
-		brute_force.c
+SRCS 	= bfs.c               collision.c         links_metods.c      print_ants.c        valid_links.c \
+brute_force.c       del_table.c         main.c              printing.c          valid_room.c \
+bruteforce.c        distribution_ants.c pow_p.c             reader.c \
+check_comment.c     init_room.c         prep_stream.c       sort_links.c
 RAW_OBJ		= $(SRCS:.c=.o)
 DOBJ	= obj
 FLAGS	= ""

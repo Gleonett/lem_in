@@ -6,7 +6,7 @@
 /*   By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:49:30 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/11 18:23:57 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/21 18:29:06 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,24 @@ t_tbhash	*init_room(void)
 	new->x = -1;
 	new->y = -1;
 	return (new);
+}
+
+void add_start_d_a(t_d_a **start_list, short num)
+{
+	t_d_a *new;
+	static short i;
+
+	if (num == 0)
+	{
+		if (i > 0)
+			return ;
+		i++;
+	}
+	CH_NULL(new = (t_d_a *)malloc(sizeof(t_d_a)));
+	new->num_ants_in_turn = num;
+	if (*start_list == NULL)
+		new->dist_ants = NULL;
+	else
+		new->dist_ants = *start_list;
+	*start_list = new;
 }

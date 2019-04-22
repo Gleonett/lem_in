@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 19:52:52 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/16 17:56:17 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/22 11:51:37 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 # define _LEM_IN_H
 
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/lol_map"
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
+# define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map"
-# define MAP "/Users/gleonett/Desktop/lem_in/maps/map3"
+//# define MAP "/Users/gleonett/Desktop/lem_in/maps/map3"
+//# define MAP "/Users/gleonett/Desktop/lem_in/maps/4"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/jest'"
 # define NUM_ROOMS 9975
-# define NUM_LINKS 20
+# define NUM_SMBLS 3000000
+# define NUM_LINKS 100
 # define SIZE_MTRX 1000
 # define POW 127
 # define SIZE_POW 10
@@ -28,6 +30,7 @@
 # define Q_ADD 0
 # define Q_GET 1
 
+# define LINE ft_printf("---------------------------------------\n")
 # define MOD(x) (x >= 0 ? x : x * -1)
 # define IF_TRUE_RET(x, y, z) if (x == 1) ({ft_memdel((void **)y); return (z);})
 # define IF_FALSE(x) if (x == 0) return (-1);
@@ -62,17 +65,28 @@ typedef struct		s_mtrx
 {
 	short 			**ways;
 	short 			**final_ways;
+	short			num_ways;
 	short 			*num_lvls;
 	short 			*baned_lvls;
 	int				num_a_r[2];
+	short			num_links;
 }					t_mtrx;
+
+typedef struct		s_d_a
+{
+	int				num_ants_in_turn;
+	struct	s_d_a	*dist_ants;
+}					t_d_a;
 
 /*
 ** функции под вопросом
 */
 void				print_mtrx(short **mtrx, int num);
 void				print_bigraph(t_tbhash ***bigr, int num_a_r[2]);
+
 void				sort_links(t_tbhash **th, t_tbhash *room);
+void				distribution_ants(t_tbhash **th, t_mtrx *mtrx);
+void				print_ants(char ***final_ways, t_mtrx *mtrx);
 
 short				**prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2]);
 void		 		prep_brute_force(t_tbhash **th, t_mtrx *ways);
@@ -88,7 +102,8 @@ int					valid_links(t_tbhash **th, size_t pow_p[], const char *s,
 						short **mtrx);
 t_tbhash			*init_room(void);
 short				**init_mtrx(int num_rooms);
-void				del_tables(t_tbhash ***th, int n_r, int n_x_y[]);
+void				add_start_d_a(t_d_a **start_list, short num);
+void				del_tables(t_tbhash ***th);
 void				del_mtrx(t_mtrx *mtrx);
 void				del_room(t_tbhash **room);
 void				power_p(size_t pow_p[]);
