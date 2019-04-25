@@ -6,7 +6,7 @@
 /*   By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 12:09:18 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/24 18:38:21 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/25 12:56:32 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,10 @@ void			add_links_queue_2(t_tbhash *room, t_tbhash *start)
 	while (++i < room->num_links)
 	{
 		if (room->links[i] == start)
-		{
-			room->links[i]->p_y = 22222;
-		}
+			room->links[i]->p_y = 32767;
 		else if (room->links[i]->p_y == -1)
 		{
 			room->links[i]->p_y = room->p_y + (short)1;
-			room->links[i]->lvl += room->links[i]->p_y * 1000;
 			queue(room->links[i], Q_ADD);
 		}
 	}
@@ -89,6 +86,7 @@ void			add_links_queue_3(t_tbhash *room, t_tbhash *start)
 		if (room->links[i] != NULL && room->links[i]->p_z == -1)
 		{
 			room->links[i]->p_z = 1;
+			room->links[i]->lvl += room->links[i]->p_y * 1000;
 			queue(room->links[i], Q_ADD);
 		}
 	}
@@ -103,41 +101,31 @@ int				bfs(t_tbhash **th, int n_x_y[2], t_mtrx	mtrx)
 	START->p_x = 0;
 	queue(START, Q_ADD);
 	while((room = queue(NULL, Q_GET)) != NULL)
-	{
 		add_links_queue(room, FINISH);
-		//		n_x_y[0] = room->p_x;
-	}
 	FINISH->p_y = 0;
 	queue(FINISH, Q_ADD);
 	while((room = queue(NULL, Q_GET)) != NULL)
-	{
 		add_links_queue_2(room, START);
-		//		insert_bi_graph(srted_rooms, mtrx.num_a_r[1], room);
-	}
-//	srted_rooms = init_bi_graph(mtrx.num_a_r[1]);
-
+	START->lvl = 2147483647;
 	START->p_z = 1;
 	queue(START, Q_ADD);
 	while((room = queue(NULL, Q_GET)) != NULL)
 	{
 		add_links_queue_3(room, FINISH);
-		sort_links(th, room);
-		if (room->deleted != 1)
-		{
-			ft_printf("\n%s y = %d  lvl = %d ", room->room, room->p_y, room->lvl);
-			int k = -1;
-			while (++k < room->num_links)
-				if (room->links[k] == NULL)
-					ft_printf("%s", NULL);
-				else
-					ft_printf("%s ", room->links[k]->room);
-		}
-		//		insert_bi_graph(srted_rooms, mtrx.num_a_r[1], room);
+		room == FINISH ? 0 : sort_links(th, room);
+//		if (room->deleted != 1)
+//		{
+//			ft_printf("\n%s y = %d  lvl = %d ", room->room, room->p_y, room->lvl);
+//			int k = -1;
+//			while (++k < room->num_links)
+//				if (room->links[k] == NULL)
+//					ft_printf("%s", NULL);
+//				else
+//					ft_printf("%s ", room->links[k]->room);
+//		}
 	}
-
-//	insert_bi_graph(srted_rooms, mtrx.num_a_r[1], NULL);
-//	b_g->bi_graph = get_bigraph(&srted_rooms, mtrx.num_a_r[1]);
-	//	print_bigraph(srted_rooms, mtrx.num_a_r);
-	//	print_bigraph(b_g->bi_graph, mtrx.num_a_r);
+	sort_links(th, START);
+	sort_links(th, FINISH);
+	ft_printf("\n");
 	return (0);
 }

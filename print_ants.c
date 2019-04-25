@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:12:33 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/23 16:18:49 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/25 20:41:55 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	fill_full_turns(char ***final_ways, char **str_ants, t_mtrx *mtrx,
 	int flag;
 
 	i = -1;
-	flag = -1;
+	flag = 0;
 	if (final_ways[mtrx->num_ways - 1][shift] == NULL)
 		return (1);
 	while (flag < mtrx->num_ways && last_ant > 0)
@@ -74,6 +74,7 @@ int	fill_full_turns(char ***final_ways, char **str_ants, t_mtrx *mtrx,
 				last_ant--;
 				continue ;
 			}
+			flag = 0;
 			cpy(final_ways[j][shift + i], str_ants[last_ant--]);
 		}
 	}
@@ -132,8 +133,7 @@ void	fill_s(char ***final_ways, char **str_ants, t_mtrx *mtrx)
 		}
 		if (j == mtrx->num_ways)
 		{
-			fill_full_turns(final_ways, str_ants, mtrx,
-					prev_last_ant, 1);
+			fill_full_turns(final_ways, str_ants, mtrx, prev_last_ant, 1);
 		}
 		else
 		{

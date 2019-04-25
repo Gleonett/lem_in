@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 17:53:37 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/21 14:04:12 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/25 19:24:47 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static short **g_final_ways_short;
 static char **g_final_ways;
-static short g_num_way;
-static short g_i;
+static long long int g_num_way;
+static int g_i;
 
 void line_print(short *line, short g_len)
 {
@@ -27,26 +27,23 @@ void line_print(short *line, short g_len)
 
 void search_rooms(t_tbhash *i)
 {
-	short j;
 	short k;
 
+	ft_printf("%s -> ", i->room);
 	if (i->p_y == 0)
 	{
 		g_final_ways[g_i++] = i->room;
 		return ;
 	}
-	j = -1;
 	k = -1;
 	while (++k < i->num_links)
 	{
-		while (i->links[++j] == NULL)
-			;
 //		line_print(g_final_ways_short[g_num_way], 15);
-		if (i->links[j]->p_y == 0 ||
-		g_final_ways_short[g_num_way][i->links[j]->place_mtrx] != 0)
+		if (i->lvl >= i->links[k]->lvl && (i->links[k]->p_y == 0 ||
+		g_final_ways_short[g_num_way][i->links[k]->place_mtrx] != 0))
 		{
 			g_final_ways[g_i++] = i->room;
-			search_rooms(i->links[j]);
+			search_rooms(i->links[k]);
 			return ;
 		}
 	}
@@ -62,14 +59,12 @@ t_tbhash *get_ways(t_tbhash *start, t_mtrx *mtrx, char ***final_ways)
 	g_final_ways_short = mtrx->final_ways;
 	while (++g_num_way < mtrx->num_ways)
 	{
-		while (start->links[++i] == NULL)
-			;
+		i = -1;
 		g_final_ways = final_ways[g_num_way];
-		search_rooms(start->links[i]);
-		int j = -1;
-//		while (++j < g_i)
-//			ft_printf("%s ", final_ways[g_num_way][j]);
-//		ft_printf("\n");
+		while (++i < mtrx->final_ways[g_num_way][mtrx->num_a_r[1] - 1])
+			;
+		search_rooms(start->links[i - 1]);
+		ft_printf("\n");
 		g_i = 0;
 	}
 	return (start->links[i]);

@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 19:52:52 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/24 17:24:48 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/25 19:42:36 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 # define _LEM_IN_H
 
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/lol_map"
-# define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map"
+//# define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
+# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/map3"
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/4"
+//# define MAP "/Users/gleonett/Desktop/lem_in/maps/1"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/jest'"
 # define NUM_ROOMS 9975
 # define NUM_SMBLS 3000000
@@ -50,7 +50,7 @@ typedef	struct		s_tbhash
 	short			p_x;
 	short			p_y;
 	short			p_z;
-	long int		lvl;
+	int				lvl;
 	short			deleted;
 	short			flag;
 	short			num_links;
