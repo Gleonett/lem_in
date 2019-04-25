@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:12:33 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/22 20:25:59 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/23 16:18:49 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	cpy(char *room, char *ant)
 	int i;
 
 	i = -1;
-	ft_printf("[L%s-%s]", ant, room);
+//	ft_printf("[L%s-%s]", ant, room);
 	g_s[++g_i] = 'L';
 	while (ant[++i])
 	{
@@ -146,7 +146,7 @@ void	fill_s(char ***final_ways, char **str_ants, t_mtrx *mtrx)
 		}
 		prev_last_ant = last_ant;
 		g_s[g_i] = '\n';
-		ft_printf("\n");
+//		ft_printf("\n");
 	}
 }
 

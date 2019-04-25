@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 15:38:57 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/22 17:04:49 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/24 18:34:35 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,19 @@ short dfs(t_tbhash *i, short lvl, short len)
 		{
 			if (g_ways[k][i->place_mtrx] == lvl)
 			{
-//				ft_printf("\n");
+				ft_printf("\n");
 				return (-3);
 			}
 		}
 	}
-//	ft_printf("%s --> ", i->room);
+	ft_printf("%s --> ", i->room);
 	g_ways[g_way][i->place_mtrx] = lvl;
 	if (i->p_y == 0)
 	{
 		g_ways[g_way][i->place_mtrx] = 0;
 		g_ways[g_way][g_num_rooms - 1] = lvl;
 		g_ways[g_way][g_num_rooms] = len;
-//		ft_printf("\n");
+		ft_printf("\n");
 		return (-2);
 	}
 	else
@@ -61,7 +61,7 @@ short dfs(t_tbhash *i, short lvl, short len)
 			num_links > i->num_links ? num_links = i->num_links : 0;
 			if (i->links[j] != NULL)
 			{
-				if (i->links[j]->flag != 1 &&
+				if (i->links[j]->flag != 1 && i->lvl < i->links[j]->lvl &&
 				(ret = dfs(i->links[j], lvl, len + (short)1)) == -1)
 				{
 //					i->links[j]->flag = 0;
@@ -115,7 +115,7 @@ short			**prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2])
 
 	g_way = 0;
 	g_num_rooms = num_a_r[1];
-	CH_NULL(g_ways = (short **)malloc(sizeof(short *) * (num_a_r[1] + 1)));
+	CH_NULL(g_ways = (short **)malloc(sizeof(short *) * (num_a_r[1] * 2 + 1)));
 	i = -1;
 	CH_NULL(mtrx->num_lvls = (short *)ft_memalloc(sizeof(short) *
 			(num_links + 1)));
@@ -123,16 +123,16 @@ short			**prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2])
 			(num_links)));
 	CH_NULL(mtrx->baned_lvls = (short *)ft_memalloc(sizeof(short) *
 			(num_links + 1)));
-	while (++i < num_a_r[1] + 1)
+	while (++i < num_a_r[1] * 2 + 1)
 		CH_NULL(g_ways[i] = (short *)ft_memalloc(sizeof(short) *
-				(num_a_r[1] + 1)));
+				(num_a_r[1] * 5 + 1)));
 	mtrx->num_links = num_links;
 	dfs(START, 1, 0);
 	ft_printf("\n");
 	g_ways[0][START->place_mtrx] = 0;
 	mtrx->ways = g_ways;
 	mtrx->num_ways = g_way;
-	print_mtrx(g_ways, num_a_r[1] + 1);
+//	print_mtrx(g_ways, num_a_r[1] + 1);
 //	i = -1;
 //	while (++i < num_a_r[1])
 //		ft_memdel((void **)g_ways + i);

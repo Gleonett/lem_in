@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 19:52:52 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/22 11:51:37 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:24:48 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef	struct		s_tbhash
 	short			p_x;
 	short			p_y;
 	short			p_z;
+	long int		lvl;
+	short			deleted;
 	short			flag;
 	short			num_links;
 	short			true_way;

@@ -6,7 +6,7 @@
 /*   By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:49:30 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/21 18:29:06 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/24 16:27:47 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ t_tbhash	*init_room(void)
 	new->p_x = -1;
 	new->p_y = -1;
 	new->p_z = -1;
+	new->deleted = 0;
 	new->flag = -1;
 	new->num_links = 0;
 	new->x = -1;
 	new->y = -1;
+	new->lvl = 0;
 	return (new);
 }
 
