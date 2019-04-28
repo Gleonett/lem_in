@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 19:41:57 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/26 18:00:32 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/28 19:17:19 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_mtrx(short **mtrx, int num)
 
 	i = -1;
 	printf("\n");
-	while (++i < num && mtrx[i][num - 1] != 0 && mtrx[i] != NULL)
+	while (++i < num && mtrx[i][num - 1] != 0)
 	{
 		j = -1;
 		while (++j < num)

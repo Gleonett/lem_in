@@ -42,11 +42,11 @@ static int	check_and_hash(t_tbhash *room, char const *s, size_t pow_p[])
 		return (-1);
 	room->room = get_room(s, i);
 	if (room->place_mtrx == 0)
-		printf("     S ");
+		ft_printf("     S ");
 	else if (room->place_mtrx == 1)
-		printf("     E ");
+		ft_printf("     E ");
 	else
-		printf("%7s", room->room);
+		ft_printf("%7s", room->room);
 	IF_FALSE((buf = str_is_int(s + i)));
 	if ((room->x = ft_atoi(s + i)) < 0)
 		return (-1);
