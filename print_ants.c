@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:12:33 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/25 20:41:55 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/27 18:00:19 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int *find_num_ants(int ants, short **final_ways, short num_ways, int j);
 static char	*g_s;
 static int	g_i;
 static int	*g_ants_in_ways;
+static int g_lolololol;
 
 void	cpy(char *room, char *ant)
 {
@@ -50,58 +51,41 @@ void	cpy(char *room, char *ant)
 	g_s[++g_i] = ' ';
 }
 
-
-int	fill_full_turns(char ***final_ways, char **str_ants, t_mtrx *mtrx,
-							int last_ant, int shift)
+int	sharp_beginning(t_d_a *dist_ants, char ***final_ways, char **str_ants,
+			int last_ant, int shift, short max_num_ways)
 {
 	int i;
 	int j;
 	int flag;
+	t_d_a *prev_list;
 
-	i = -1;
-	flag = 0;
-	if (final_ways[mtrx->num_ways - 1][shift] == NULL)
+	if (dist_ants == NULL)
 		return (1);
-	while (flag < mtrx->num_ways && last_ant > 0)
+	if (shift == 20)
+		ft_printf("");
+	i = 1;
+	flag = 0;
+	while (dist_ants != NULL && flag <= dist_ants->num_ants_in_turn)
 	{
-		i++;
-		j = mtrx->num_ways;
+		j = dist_ants->num_ants_in_turn;
+		flag = 0;
 		while (--j > -1)
 		{
 			if (final_ways[j][shift + i] == NULL)
 			{
+				last_ant -= 1;
 				flag++;
-				last_ant--;
 				continue ;
 			}
-			flag = 0;
 			cpy(final_ways[j][shift + i], str_ants[last_ant--]);
 		}
-	}
-	return (0);
-}
-
-int	sharp_beginning(t_d_a *dist_ants, char ***final_ways, char **str_ants,
-			int *last_ant, int shift)
-{
-	int i;
-	int j;
-
-	if (dist_ants == NULL)
-		return (1);
-	i = 1;
-	while (dist_ants != NULL)
-	{
-		j = dist_ants->num_ants_in_turn;
-		while (--j > -1)
+		if (dist_ants->num_ants_in_turn == max_num_ways &&
+			flag == dist_ants->num_ants_in_turn)
 		{
-			if (final_ways[j][shift + i - 1] == NULL)
-			{
-				*last_ant -= 1;
-				continue ;
-			}
-			cpy(final_ways[j][shift + i - 1], str_ants[(*last_ant)--]);
+			ft_memdel((void **)&(prev_list->dist_ants));
+			return (i == 1 ? -1 : i);
 		}
+		prev_list = dist_ants;
 		dist_ants = dist_ants->dist_ants;
 		i++;
 	}
@@ -131,22 +115,15 @@ void	fill_s(char ***final_ways, char **str_ants, t_mtrx *mtrx)
 			g_ants_in_ways[j] -= 1;
 			cpy(final_ways[j][0], str_ants[++last_ant]);
 		}
-		if (j == mtrx->num_ways)
-		{
-			fill_full_turns(final_ways, str_ants, mtrx, prev_last_ant, 1);
-		}
-		else
-		{
-			add_start_d_a(&start_list, j);
-			i = sharp_beginning(start_list->dist_ants, final_ways, str_ants,
-					&prev_last_ant, turns + 1);
-			fill_full_turns(final_ways, str_ants, mtrx,
-					prev_last_ant, i + turns);
-			j == 0 ? turns++ : 0;
-		}
+		add_start_d_a(&start_list, j);
+		if (sharp_beginning(start_list->dist_ants, final_ways, str_ants,
+				prev_last_ant, turns, mtrx->num_ways) == -1)
+			return ;
+		j == 0 ? turns++ : 0;
 		prev_last_ant = last_ant;
 		g_s[g_i] = '\n';
-//		ft_printf("\n");
+		g_lolololol++;
+//				ft_printf("\n");
 	}
 }
 
@@ -157,6 +134,7 @@ void	print_ants(char ***final_ways, t_mtrx *mtrx)
 	char	**str_ants;
 
 	g_i = -1;
+	g_lolololol = 0;
 	CH_NULL(g_s = (char *)malloc((size_t)NUM_SMBLS));
 	g_ants_in_ways = find_num_ants(mtrx->num_a_r[0], mtrx->final_ways,
 			mtrx->num_ways, mtrx->num_a_r[1]);
@@ -164,6 +142,8 @@ void	print_ants(char ***final_ways, t_mtrx *mtrx)
 	fill_s(final_ways, str_ants, mtrx);
 	create_del_str_ants(&str_ants, mtrx->num_a_r[0], 1);
 	write(1, g_s, (size_t)g_i);
+	write(1, "\n", 1);
+	ft_printf("%d\n", g_lolololol);
 	ft_memdel((void **)&g_s);
 }
 
@@ -198,50 +178,34 @@ void print_dist(int num_ways, int *dstrbtd_ants)
 	LINE;
 }
 
-int boost(int *dist_ants, int i, int ants, int num_ways)
-{
-	int j;
-	int buf;
-
-	buf = (ants - i) / num_ways;
-	j = -1;
-	while (++j < num_ways)
-		dist_ants[j] += buf;
-	buf = (ants - i) % num_ways;
-	while (--buf > -1)
-		dist_ants[buf] += 1;
-	return (1);
-}
-
 int *find_num_ants(int ants, short **final_ways, short num_ways, int j)
 {
 	int *dstrbtd_ants;
-	int buf_len;
 	int i;
 	int k;
-	int l;
 
+	if (num_ways == 0)
+		return (NULL);
 	CH_NULL(dstrbtd_ants = (int *)ft_memalloc(sizeof(int) * num_ways));
-	i = 0;
-	dstrbtd_ants[0] = i;
-	k = -1;
-	while (i < ants && ++k < num_ways)
+	i = 1;
+	dstrbtd_ants[0] = 0;
+	k = 1;
+	dstrbtd_ants[0] += 1;
+	while (i < ants)
 	{
-		if (k > 0)
-			buf_len = final_ways[k][j] - final_ways[k - 1][j];
-		else
-			buf_len = 1;
-		if ((i += ((buf_len * (k + 1) - buf_len + 1))) > ants)
+		if (k == num_ways || final_ways[k][j] + dstrbtd_ants[k] >
+		final_ways[0][j] + dstrbtd_ants[0] - 1)
 		{
-			i -= ((buf_len * (k + 1) - buf_len + 1));
-			break ;
+			dstrbtd_ants[0] += 1;
+			i++;
+			k = 1;
+//			print_dist(num_ways, dstrbtd_ants);
+			continue ;
 		}
-		l = k;
-		dstrbtd_ants[l] = dstrbtd_ants[l] == 0 ? 1 : dstrbtd_ants[l] + 1;
-		while (--l > -1)
-			dstrbtd_ants[l] += buf_len;
+		dstrbtd_ants[k] += 1;
+		i++;
+		k++;
 	}
-	boost(dstrbtd_ants, i, ants, num_ways);
 	print_dist(num_ways, dstrbtd_ants);
 	return (dstrbtd_ants);
 }

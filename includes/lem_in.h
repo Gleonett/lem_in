@@ -6,20 +6,21 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 19:52:52 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/25 19:42:36 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/28 15:29:40 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _LEM_IN_H
 # define _LEM_IN_H
 
+//# define MAP "/Users/gleonett/Desktop/lem_in/maps/map3"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/lol_map"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
-# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map"
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/map3"
+//# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/1"
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/jest'"
-# define NUM_ROOMS 9975
+# define MAP "/Users/gleonett/Desktop/lem_in/maps/jest'"
+//# define NUM_ROOMS 9975
+# define NUM_ROOMS 3333
 # define NUM_SMBLS 3000000
 # define NUM_LINKS 100
 # define SIZE_MTRX 1000
@@ -89,6 +90,8 @@ void				print_bigraph(t_tbhash ***bigr, int num_a_r[2]);
 void				sort_links(t_tbhash **th, t_tbhash *room);
 void				distribution_ants(t_tbhash **th, t_mtrx *mtrx);
 void				print_ants(char ***final_ways, t_mtrx *mtrx);
+
+int			*find_num_ants(int ants, short **final_ways, short num_ways, int j);
 
 short				**prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2]);
 void		 		prep_brute_force(t_tbhash **th, t_mtrx *ways);

@@ -6,12 +6,17 @@
 /*   By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 16:55:27 by gleonett          #+#    #+#             */
-/*   Updated: 2019/03/22 21:34:58 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/28 15:07:31 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _LIBFT_H
 # define _LIBFT_H
+
+# define MAX_INT 2147483647
+# define MIN_INT -2147483648
+# define MAX_SHORT  32767
+# define MIN_SHORT  -32768
 
 # include <stdio.h>
 # include <string.h>

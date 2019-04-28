@@ -6,7 +6,7 @@
 /*   By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 13:59:42 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/17 16:56:01 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/26 18:38:24 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ static int	check_and_hash(t_tbhash *room, char const *s, size_t pow_p[])
 	if (s[i++] != ' ')
 		return (-1);
 	room->room = get_room(s, i);
-//	if (room->place_mtrx == 0)
-//		printf(" S ");
-//	else if (room->place_mtrx == 1)
-//		printf(" E ");
-//	else
-//		printf("%3s", room->room);
+	if (room->place_mtrx == 0)
+		printf("     S ");
+	else if (room->place_mtrx == 1)
+		printf("     E ");
+	else
+		printf("%7s", room->room);
 	IF_FALSE((buf = str_is_int(s + i)));
 	if ((room->x = ft_atoi(s + i)) < 0)
 		return (-1);

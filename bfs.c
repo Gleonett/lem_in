@@ -6,7 +6,7 @@
 /*   By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 12:09:18 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/25 12:56:32 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/26 17:44:35 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int				bfs(t_tbhash **th, int n_x_y[2], t_mtrx	mtrx)
 	queue(START, Q_ADD);
 	while((room = queue(NULL, Q_GET)) != NULL)
 		add_links_queue(room, FINISH);
+	FINISH->p_x = MAX_SHORT;
 	FINISH->p_y = 0;
 	queue(FINISH, Q_ADD);
 	while((room = queue(NULL, Q_GET)) != NULL)

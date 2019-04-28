@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 19:41:57 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/25 14:47:08 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/04/26 18:00:32 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@ void	print_mtrx(short **mtrx, int num)
 		while (++j < num)
 		{
 			if (mtrx[i][j] == 0)
-				printf("["PURPLE"%d"REBOOT"]", mtrx[i][j]);
+//				printf("");
+				printf("["PURPLE"%5d"REBOOT"]", mtrx[i][j]);
 			else
-				printf("["YELLOW"%d"REBOOT"]", mtrx[i][j]);
+				printf("["YELLOW"%5d"REBOOT"]", mtrx[i][j]);
 		}
 		printf("\n");
 	}
