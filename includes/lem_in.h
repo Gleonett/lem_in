@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 19:52:52 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/28 21:07:14 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/05/09 18:34:47 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/map3"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/lol_map"
-# define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
+//# define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map"
+# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map_2"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/1"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/jest'"
 //# define NUM_ROOMS 9975
@@ -35,12 +36,15 @@
 # define MOD(x) (x >= 0 ? x : x * -1)
 # define IF_TRUE_RET(x, y, z) if (x == 1) ({ft_memdel((void **)y); return (z);})
 # define IF_FALSE(x) if (x == 0) return (-1);
+# define BIG_MAP (g_diff > 150 ? 1 : -2)
 
 /*
 **exit (3) - ошибка выделения памяти
 */
 
 # include "ft_printf.h"
+
+//int total;
 
 typedef	struct		s_tbhash
 {
@@ -52,16 +56,16 @@ typedef	struct		s_tbhash
 	short			p_y;
 	short			p_z;
 	int				lvl;
-	short			deleted;
 	short			flag;
 	short			num_links;
-	short			true_way;
-	struct s_tbhash	**links;
 	struct s_tbhash	*next;
-	struct s_tbhash	*way;
 	struct s_tbhash	*queue_prev;
 	int				x;
 	int				y;
+	struct s_tbhash	**links;
+	//	struct s_tbhash	*way;
+	//	short			true_way;
+	//	short			deleted;
 }					t_tbhash;
 
 typedef struct		s_mtrx
@@ -73,6 +77,7 @@ typedef struct		s_mtrx
 	short 			*baned_lvls;
 	int				num_a_r[2];
 	short			num_links;
+	short			total_links;
 }					t_mtrx;
 
 typedef struct		s_d_a
@@ -88,10 +93,13 @@ void				print_mtrx(short **mtrx, int num);
 void				print_bigraph(t_tbhash ***bigr, int num_a_r[2]);
 
 void				sort_links(t_tbhash **th, t_tbhash *room);
+void				sort_lvls_in_mtrx(short *num_lvls, short **ways,
+						t_mtrx *mtrx);
 void				distribution_ants(t_tbhash **th, t_mtrx *mtrx);
 void				print_ants(char ***final_ways, t_mtrx *mtrx);
 
-int			*find_num_ants(int ants, short **final_ways, short num_ways, int j);
+int					*find_num_ants(int ants, short **final_ways, short num_ways,
+					int j);
 
 short				**prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2]);
 void		 		prep_brute_force(t_tbhash **th, t_mtrx *ways);

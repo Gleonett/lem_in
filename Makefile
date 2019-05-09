@@ -6,7 +6,7 @@
 #    By: gleonett <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/13 19:31:05 by gleonett          #+#    #+#              #
-#    Updated: 2019/04/25 12:22:11 by gleonett         ###   ########.fr        #
+#    Updated: 2019/05/09 12:46:40 by gleonett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ LIB		= ft_printf
 INC		= includes
 LINC 	= ft_printf/libftprintf.a
 SRCS 	= bfs.c               collision.c         links_metods.c      print_ants.c        valid_links.c \
-brute_force.c       del_table.c         main.c              printing.c          valid_room.c \
+brute_force.c    sort_lvls.c   del_table.c         main.c              printing.c          valid_room.c \
 bruteforce.c        distribution_ants.c pow_p.c             reader.c \
 check_comment.c     init_room.c         prep_stream.c       sort_links.c
 RAW_OBJ		= $(SRCS:.c=.o)

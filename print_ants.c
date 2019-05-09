@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 15:12:33 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/27 18:00:19 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/05/09 18:04:08 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,12 @@ void	print_ants(char ***final_ways, t_mtrx *mtrx)
 	create_del_str_ants(&str_ants, mtrx->num_a_r[0], 0);
 	fill_s(final_ways, str_ants, mtrx);
 	create_del_str_ants(&str_ants, mtrx->num_a_r[0], 1);
-	write(1, g_s, (size_t)g_i);
+//	write(1, g_s, (size_t)g_i);
 	write(1, "\n", 1);
-	ft_printf("%d\n", g_lolololol);
+	ft_printf(GREEN"\n%d - turns\n"REBOOT"%d - rooms\n%d - links\n"
+	RED"\nDIFFERENT = %d\n"REBOOT, g_lolololol,
+			mtrx->num_a_r[1], mtrx->total_links, mtrx->total_links -
+			mtrx->num_a_r[1]);
 	ft_memdel((void **)&g_s);
 }
 

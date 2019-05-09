@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/18 17:53:37 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/27 18:41:18 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/05/09 17:10:27 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void distribution_ants(t_tbhash **th, t_mtrx *mtrx)
 	while (++i < mtrx->num_ways)
 		CH_NULL(final_ways[i] = (char **)ft_memalloc(sizeof(char *) *
 				(2 * mtrx->final_ways[mtrx->num_ways - 1][mtrx->num_a_r[1]] +
-				1)));
+				3)));
 //	sort_final_ways(mtrx->final_ways, final_ways, mtrx->num_ways,
 //					mtrx->num_a_r[1]);
 	get_ways(START, mtrx, final_ways);
@@ -131,5 +131,8 @@ void distribution_ants(t_tbhash **th, t_mtrx *mtrx)
 			mtrx->num_a_r[1]);
 	print_rooms(final_ways, *mtrx);
 	print_ants(final_ways, mtrx);
+	while (++i < mtrx->num_ways)
+		ft_memdel((void **)final_ways + i);
+	ft_memdel((void **)&final_ways);
 	del_tables(&th);
 }

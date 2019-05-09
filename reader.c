@@ -6,7 +6,7 @@
 /*   By: gleonett <gleonett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/15 16:04:45 by gleonett          #+#    #+#             */
-/*   Updated: 2019/04/05 17:24:46 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/05/09 17:48:55 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	reader(t_tbhash **th, size_t *pow_p, t_mtrx *mtrx)
 		flag == 0 ? mtrx->num_a_r[1] += 1 : 0;
 		if (*line != '#')
 		{
+			mtrx->total_links += 1;
 			if (flag == 0 && valid_room(line, th, pow_p, 0) == 1)
 			{
 				flag++;

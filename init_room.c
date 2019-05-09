@@ -36,14 +36,14 @@ t_tbhash	*init_room(void)
 	new->queue_prev = NULL;
 	new->room = NULL;
 	new->next = NULL;
-	new->way = NULL;
+//	new->way = NULL;
 	new->num_ant = 0;
 	new->place_mtrx = place++;
-	new->true_way = 0;
+//	new->true_way = 0;
 	new->p_x = -1;
 	new->p_y = -1;
 	new->p_z = -1;
-	new->deleted = 0;
+//	new->deleted = 0;
 	new->flag = -1;
 	new->num_links = 0;
 	new->x = -1;
