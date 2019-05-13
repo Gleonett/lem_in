@@ -19,7 +19,7 @@ char	*ft_strnew(size_t size)
 	if (size == (size_t)-1)
 		return (0);
 	str = (char *)malloc(size + 1);
-	if (!str)
+	if (str == NULL)
 		return (0);
 	ft_memset(str, 0, size + 1);
 	return (str);

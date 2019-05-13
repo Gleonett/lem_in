@@ -6,7 +6,7 @@
 #    By: gleonett <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/13 19:31:05 by gleonett          #+#    #+#              #
-#    Updated: 2019/05/09 12:46:40 by gleonett         ###   ########.fr        #
+#    Updated: 2019/05/13 15:56:12 by gleonett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ bruteforce.c        distribution_ants.c pow_p.c             reader.c \
 check_comment.c     init_room.c         prep_stream.c       sort_links.c
 RAW_OBJ		= $(SRCS:.c=.o)
 DOBJ	= obj
-FLAGS	= 
+FLAGS	= -Ofast
 # -Wall -Wextra -Werror
 
 OBJ = $(addprefix $(DOBJ)/,$(RAW_OBJ))

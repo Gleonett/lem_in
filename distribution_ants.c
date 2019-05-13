@@ -115,22 +115,22 @@ void distribution_ants(t_tbhash **th, t_mtrx *mtrx)
 	char	***final_ways;
 	short	i;
 
-	LINE;
+//	LINE;
 	CH_NULL(final_ways = (char ***)malloc(sizeof(char **) *
 			(mtrx->num_ways + 1)));
 	final_ways[mtrx->num_ways] = NULL;
 	i = -1;
 	while (++i < mtrx->num_ways)
 		CH_NULL(final_ways[i] = (char **)ft_memalloc(sizeof(char *) *
-				(2 * mtrx->final_ways[mtrx->num_ways - 1][mtrx->num_a_r[1]] +
-				3)));
+				(mtrx->final_ways[mtrx->num_ways - 1][mtrx->num_a_r[1]] + 3)));
 //	sort_final_ways(mtrx->final_ways, final_ways, mtrx->num_ways,
 //					mtrx->num_a_r[1]);
 	get_ways(START, mtrx, final_ways);
 	sort_final_ways(mtrx->final_ways, final_ways, mtrx->num_ways,
 			mtrx->num_a_r[1]);
-	print_rooms(final_ways, *mtrx);
+//	print_rooms(final_ways, *mtrx);
 	print_ants(final_ways, mtrx);
+	i = -1;
 	while (++i < mtrx->num_ways)
 		ft_memdel((void **)final_ways + i);
 	ft_memdel((void **)&final_ways);

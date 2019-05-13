@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 15:38:57 by gleonett          #+#    #+#             */
-/*   Updated: 2019/05/09 18:10:38 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/05/12 15:55:28 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,8 @@ short dfs(t_tbhash *i, short lvl, short len)
 //		while (--k > -1 && (g_ways[k][g_num_rooms - 1] == lvl ||
 //			g_ways[k][g_num_rooms - 1] == 0))
 //		{
-//
 //			if (g_ways[k][i->place_mtrx] == lvl)
 //			{
-//				if (ft_strcmp("Gyw7", i->room) == 0)
-//					printf("");
-////				ft_printf("\n");
 //				return (-1);
 //			}
 //		}
@@ -137,7 +133,7 @@ short			**prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2])
 	CH_NULL(mtrx->final_ways = (short **)ft_memalloc(sizeof(short *) *
 			(num_links)));
 	CH_NULL(mtrx->baned_lvls = (short *)ft_memalloc(sizeof(short) *
-			(num_links + 1)));
+			(START->num_links + 1)));
 	while (++i < (num_a_r[1] * 10 + 1))
 		CH_NULL(g_ways[i] = (short *)ft_memalloc(sizeof(short) *
 				(num_a_r[1] + 1)));

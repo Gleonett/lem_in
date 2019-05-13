@@ -41,9 +41,9 @@ char		*ft_itoa(int n)
 	k = 0;
 	znak = 'J';
 	if (n == -2147483648)
-		return (ft_strcpy(ft_strnew(11), "-2147483648"));
+		return (ft_strdup("-2147483648"));
 	if (n == 0)
-		return (ft_strcpy(ft_strnew(1), "0"));
+		return (ft_strdup("0"));
 	if (n < 0)
 	{
 		znak = '-';

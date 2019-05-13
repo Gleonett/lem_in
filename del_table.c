@@ -62,6 +62,20 @@ void		del_tables(t_tbhash ***th)
 	ft_memdel((void **)th);
 }
 
+void del_d_a_list(t_d_a **start)
+{
+	t_d_a	*i;
+	t_d_a	*back;
+
+	i = *start;
+	while (i != NULL)
+	{
+		back = i;
+		i = i->dist_ants;
+		ft_memdel((void **)&back);
+	}
+}
+
 
 void		del_mtrx(t_mtrx *mtrx)
 {

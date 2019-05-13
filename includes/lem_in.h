@@ -6,7 +6,7 @@
 /*   By: gleonett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 19:52:52 by gleonett          #+#    #+#             */
-/*   Updated: 2019/05/09 18:34:47 by gleonett         ###   ########.fr       */
+/*   Updated: 2019/05/12 20:39:17 by gleonett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/lol_map"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map"
-# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map_2"
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/1"
+//# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map_2"
+# define MAP "/Users/gleonett/Desktop/lem_in/maps/1"
 //# define MAP "/Users/gleonett/Desktop/lem_in/maps/jest'"
-//# define NUM_ROOMS 9975
-# define NUM_ROOMS 3333
+# define NUM_ROOMS 9975
+//# define NUM_ROOMS 3333
 # define NUM_SMBLS 3000000
 # define NUM_LINKS 100
 # define SIZE_MTRX 1000
@@ -32,11 +32,11 @@
 # define Q_ADD 0
 # define Q_GET 1
 
-# define LINE ft_printf("---------------------------------------\n")
+//# define LINE ft_printf("---------------------------------------\n")
 # define MOD(x) (x >= 0 ? x : x * -1)
 # define IF_TRUE_RET(x, y, z) if (x == 1) ({ft_memdel((void **)y); return (z);})
 # define IF_FALSE(x) if (x == 0) return (-1);
-# define BIG_MAP (g_diff > 150 ? 1 : -2)
+# define BIG_MAP (g_diff > 150 ? 1 : -1)
 
 /*
 **exit (3) - ошибка выделения памяти
@@ -89,10 +89,11 @@ typedef struct		s_d_a
 /*
 ** функции под вопросом
 */
-void				print_mtrx(short **mtrx, int num);
+void				print_mtrx(short **mtrx, int len, int width);
 void				print_bigraph(t_tbhash ***bigr, int num_a_r[2]);
 
 void				sort_links(t_tbhash **th, t_tbhash *room);
+int					shells_sort(short **tab, int size, int d, int len);
 void				sort_lvls_in_mtrx(short *num_lvls, short **ways,
 						t_mtrx *mtrx);
 void				distribution_ants(t_tbhash **th, t_mtrx *mtrx);
@@ -117,6 +118,7 @@ t_tbhash			*init_room(void);
 short				**init_mtrx(int num_rooms);
 void				add_start_d_a(t_d_a **start_list, short num);
 void				del_tables(t_tbhash ***th);
+void				del_d_a_list(t_d_a **start);
 void				del_mtrx(t_mtrx *mtrx);
 void				del_room(t_tbhash **room);
 void				power_p(size_t pow_p[]);
