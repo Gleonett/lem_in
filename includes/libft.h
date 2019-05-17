@@ -17,6 +17,7 @@
 # define MIN_INT -2147483648
 # define MAX_SHORT  32767
 # define MIN_SHORT  -32768
+# define IF_EQUAL_RET(x, y, ret) if (x == y) ({return (ret);})
 
 # include <stdio.h>
 # include <string.h>

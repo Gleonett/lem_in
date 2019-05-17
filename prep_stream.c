@@ -44,7 +44,6 @@ short dfs(t_tbhash *i, short lvl, short len)
 //			}
 //		}
 //	}
-//	ft_printf("%s --> ", i->room);
 	ret_fill = g_way;
 	g_ways[g_way][i->place_mtrx] = lvl;
 	if (i->p_y == 0)
@@ -53,7 +52,6 @@ short dfs(t_tbhash *i, short lvl, short len)
 		g_ways[g_way][g_num_rooms - 1] = lvl;
 		g_ways[g_way][g_num_rooms] = len;
 		g_way++;
-//		ft_printf("\n");
 		return (-2);
 	}
 	else

@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-short 		**init_mtrx(int num_rooms)
+short			**init_mtrx(int num_rooms)
 {
 	short	**x;
 	int		i;
@@ -24,7 +24,7 @@ short 		**init_mtrx(int num_rooms)
 	return (x);
 }
 
-t_tbhash	*init_room(void)
+t_tbhash		*init_room(void)
 {
 	t_tbhash		*new;
 	static short	place;
@@ -36,14 +36,10 @@ t_tbhash	*init_room(void)
 	new->queue_prev = NULL;
 	new->room = NULL;
 	new->next = NULL;
-//	new->way = NULL;
-	new->num_ant = 0;
 	new->place_mtrx = place++;
-//	new->true_way = 0;
 	new->p_x = -1;
 	new->p_y = -1;
 	new->p_z = -1;
-//	new->deleted = 0;
 	new->flag = -1;
 	new->num_links = 0;
 	new->x = -1;
@@ -52,10 +48,10 @@ t_tbhash	*init_room(void)
 	return (new);
 }
 
-void add_start_d_a(t_d_a **start_list, short num)
+void			add_start_d_a(t_d_a **start_list, short num)
 {
-	t_d_a *new;
-	static short i;
+	t_d_a			*new;
+	static short	i;
 
 	if (num == 0)
 	{

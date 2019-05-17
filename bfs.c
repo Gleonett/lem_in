@@ -49,7 +49,7 @@ void			add_links_queue(t_tbhash *room, t_tbhash *finish)
 		if (room->links[i]->p_x == -1)
 		{
 			room->links[i]->p_x = room->p_x + (short)1;
-			room->links[i]->lvl  = 100 - room->links[i]->p_x;
+			room->links[i]->lvl = 100 - room->links[i]->p_x;
 			queue(room->links[i], Q_ADD);
 		}
 	}
@@ -92,38 +92,26 @@ void			add_links_queue_3(t_tbhash *room, t_tbhash *start)
 	}
 }
 
-int				bfs(t_tbhash **th, int n_x_y[2], t_mtrx	mtrx)
+int				bfs(t_tbhash **th)
 {
 	t_tbhash	*room;
-//	t_tbhash	***srted_rooms;
-
 
 	START->p_x = 0;
 	queue(START, Q_ADD);
-	while((room = queue(NULL, Q_GET)) != NULL)
+	while ((room = queue(NULL, Q_GET)) != NULL)
 		add_links_queue(room, FINISH);
 	FINISH->p_x = MAX_SHORT;
 	FINISH->p_y = 0;
 	queue(FINISH, Q_ADD);
-	while((room = queue(NULL, Q_GET)) != NULL)
+	while ((room = queue(NULL, Q_GET)) != NULL)
 		add_links_queue_2(room, START);
 	START->lvl = 2147483647;
 	START->p_z = 1;
 	queue(START, Q_ADD);
-	while((room = queue(NULL, Q_GET)) != NULL)
+	while ((room = queue(NULL, Q_GET)) != NULL)
 	{
 		add_links_queue_3(room, FINISH);
 		room == FINISH ? 0 : sort_links(th, room);
-//		if (room->deleted != 1)
-//		{
-//			ft_printf("\n%s y = %d  lvl = %d ", room->room, room->p_y, room->lvl);
-//			int k = -1;
-//			while (++k < room->num_links)
-//				if (room->links[k] == NULL)
-//					ft_printf("%s", NULL);
-//				else
-//					ft_printf("%s ", room->links[k]->room);
-//		}
 	}
 	sort_links(th, START);
 	sort_links(th, FINISH);

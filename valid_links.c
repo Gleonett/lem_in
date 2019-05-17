@@ -73,8 +73,6 @@ static void	init_links(t_tbhash **room1, t_tbhash **room2, short **mtrx)
 		add_size(room2);
 	(*room1)->links[(*room1)->num_links - 1] = *room2;
 	(*room2)->links[(*room2)->num_links - 1] = *room1;
-//	mtrx[(*room1)->place_mtrx][(*room2)->place_mtrx] = 1;
-//	mtrx[(*room2)->place_mtrx][(*room1)->place_mtrx] = 1;
 	(*room1)->links[(*room1)->num_links] = NULL;
 	(*room2)->links[(*room2)->num_links] = NULL;
 }

@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "lem_in.h"
 
-void	smallest_connectivity(t_tbhash **links, short num)
+static void		smallest_connectivity(t_tbhash **links, short num)
 {
 	short i;
 	short j;
@@ -24,33 +23,14 @@ void	smallest_connectivity(t_tbhash **links, short num)
 		j = i;
 		while (j > -1 && links[j]->p_x == links[j + 1]->p_x)
 		{
-			if (links[j]->p_y > links[j + 1]->p_y
-					/* && links[j]->p_x != 0*/)
+			if (links[j]->p_y > links[j + 1]->p_y)
 				ft_swap((void **)links + j, (void **)links + j + 1);
 			j--;
 		}
 	}
 }
 
-//void	sort_lvl(t_tbhash **links, short num)
-//{
-//	short i;
-//	short j;
-//
-//	i = -1;
-//	while (++i + 1 < num)
-//	{
-//		j = i;
-//		while (j > -1 && links[j + 1] != NULL && (links[j] == NULL ||
-//				links[j]->lvl > links[j + 1]->lvl))
-//		{
-//			ft_swap((void **)links + j, (void **)links + j + 1);
-//			j--;
-//		}
-//	}
-//}
-
-void	sort_lvl(t_tbhash **links, short num)
+static void		sort_lvl(t_tbhash **links, short num)
 {
 	short i;
 	short j;
@@ -68,10 +48,10 @@ void	sort_lvl(t_tbhash **links, short num)
 	}
 }
 
-size_t start_room(t_tbhash **links, short num)
+static size_t	start_room(t_tbhash **links, short num)
 {
-	int i;
-	size_t num_dead_ends;
+	size_t	num_dead_ends;
+	int		i;
 
 	i = -1;
 	num_dead_ends = 0;
@@ -83,7 +63,7 @@ size_t start_room(t_tbhash **links, short num)
 	return (num_dead_ends);
 }
 
-void finish_room(t_tbhash **links, short num)
+static void		finish_room(t_tbhash **links, short num)
 {
 	int i;
 	int j;
@@ -108,8 +88,7 @@ void finish_room(t_tbhash **links, short num)
 	}
 }
 
-
-void	sort_links(t_tbhash **th, t_tbhash *room)
+void			sort_links(t_tbhash **th, t_tbhash *room)
 {
 	sort_lvl(room->links, room->num_links);
 	if (room == START)

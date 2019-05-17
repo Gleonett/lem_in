@@ -12,35 +12,23 @@
 
 #include "lem_in.h"
 
-int	skip_spaces(const char *str, int *i)
+void		bufcat_and_write(char *s1, const char *s2, int flag)
 {
-	while (str[*i] && (str[*i] == '\t' || str[*i] == ' '))
-		*i += 1;
-	return (str[*i] == '\0' ? 1 : 0);
+	static int	i;
+	int			j;
+
+	if (flag == 0)
+	{
+		j = 0;
+		while (s2[j] != '\0')
+			s1[i++] = s2[j++];
+		s1[i++] = '\n';
+	}
+	else
+		write(1, s1, i);
 }
 
-int	str_is_int(const char *str)
-{
-	int i;
-	int j;
-
-	i = 0;
-	if (skip_spaces(str, &i) == 1)
-		return (-1);
-	j = i;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i] && str[i] >= '0' && str[i] <= '9')
-		i++;
-	if (i - j > 12 || ((str[j] == '+' || str[j] == '-') &&
-		(i - j == 1)))
-		return (0);
-	else if (str[j] == '-')
-		return (i * -1);
-	return (i);
-}
-
-int	prep_for_read(int fd, char **line, int *num_ants, int *flag)
+int			prep_for_read(int fd, char **line, int *num_ants, int *flag)
 {
 	long int	b;
 	int			a;
@@ -53,46 +41,59 @@ int	prep_for_read(int fd, char **line, int *num_ants, int *flag)
 	}
 	if (a < 0)
 		return (1);
-	IF_TRUE_RET((a == 0 ? 1 : 0), (line), (1));
-	IF_TRUE_RET((str_is_int(*line) < 1 ? 1 : 0), (line), (1));
-	IF_TRUE_RET(((b = ft_atoli(*line)) > 2147483647 || b < -2147483648 ? 1 : 0),
+	IF_1_RET((a == 0 ? 1 : 0), (line), (1));
+	IF_1_RET(((a = str_is_int(*line)) < 1 ? 1 : 0), (line), (1));
+	if ((*line)[a] != '\0')
+	{
+		free(*line);
+		return (1);
+	}
+	IF_1_RET(((b = ft_atoli(*line)) > 2147483647 || b < 1 ? 1 : 0),
 			(line), (1));
 	*num_ants = (int)b;
-	ft_memdel((void **)line);
 	*flag = 0;
 	return (0);
 }
 
-int	reader(t_tbhash **th, size_t *pow_p, t_mtrx *mtrx)
+static int	check_room(t_mtrx *mtrx, int *flag, char **line, t_th_pow_p *th_p)
 {
+	mtrx->total_links += 1;
+	if (*flag == 0 && valid_room(*line, th_p->th, th_p->pow_p, 0) == 1)
+	{
+		*flag += 1;
+		IF_1_RET(valid_links(th_p->th, th_p->pow_p, *line, mtrx->ways),
+				line, 1);
+	}
+	else if (*flag != 0)
+		IF_1_RET(valid_links(th_p->th, th_p->pow_p, *line, mtrx->ways),
+				line, 1);
+	return (0);
+}
+
+int			reader(t_th_pow_p *th_p, t_mtrx *mtrx)
+{
+	const int	fd = open(MAP, O_RDONLY);
 	int			flag;
 	char		*line;
-	const int	fd = open(MAP, O_RDONLY);
+	char		*buf;
 
-	if (prep_for_read(fd, &line, &(mtrx->num_a_r[0]), &flag) == 1)
-		return (-1);
+	buf = (char *)gc_malloc(sizeof(char) * NUM_SMBLS, "read");
+	IF_1_RET(prep_for_read(fd, &line, &(mtrx->num_a_r[0]), &flag), NULL, -1);
+	bufcat_and_write(buf, line, 0);
+	ft_memdel((void **)&line);
 	while (get_next_line(fd, &line) > 0)
 	{
+		bufcat_and_write(buf, line, 0);
 		flag == 0 ? mtrx->num_a_r[1] += 1 : 0;
 		if (*line != '#')
 		{
-			mtrx->total_links += 1;
-			if (flag == 0 && valid_room(line, th, pow_p, 0) == 1)
-			{
-				flag++;
-//				mtrx->mtrx = init_mtrx(mtrx->num_a_r[1]);
-				IF_TRUE_RET(valid_links(th, pow_p, line, mtrx->ways),
-						&line, -1);
-			}
-			else if (flag != 0)
-				IF_TRUE_RET(valid_links(th, pow_p, line, mtrx->ways),
-						&line, -1);
+			IF_1_RET(check_room(mtrx, &flag, &line, th_p), NULL, -1);
 		}
 		else
-			IF_TRUE_RET(check_comment(&line, th, pow_p, fd), &line, -1);
+			IF_1_RET(check_comment(&line, th_p, buf, fd), &line, -1);
 		ft_memdel((void **)&line);
 	}
 	close(fd);
-	ft_memdel((void **)&line);
-	return (0);
+	bufcat_and_write(buf, NULL, 1);
+	IF_1_RET(1, &line, 0);
 }

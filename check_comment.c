@@ -27,7 +27,7 @@ static int	check_comment_2(char **line, t_tbhash **th, size_t pow_p[], int num)
 	return (0);
 }
 
-int			check_comment(char **line, t_tbhash **th, size_t pow_p[], int fd)
+int			check_comment(char **line, t_th_pow_p *th_p, char *buf, int fd)
 {
 	int i;
 
@@ -38,14 +38,16 @@ int			check_comment(char **line, t_tbhash **th, size_t pow_p[], int fd)
 	if (ft_strncmp(*line, "##start", (size_t)i) == 0 && skip_spaces(*line, &i)
 			== 1)
 	{
-		if (check_comment_2(line, th, pow_p, 2) == 1)
+		if (check_comment_2(line, th_p->th, th_p->pow_p, 2) == 1)
 			return (1);
+		bufcat_and_write(buf, *line, 0);
 	}
 	else if (ft_strncmp(*line, "##end", (size_t)i) == 0 &&
 		skip_spaces(*line, &i) == 1)
 	{
-		if (check_comment_2(line, th, pow_p, 1) == 1)
+		if (check_comment_2(line, th_p->th, th_p->pow_p, 1) == 1)
 			return (1);
+		bufcat_and_write(buf, *line, 0);
 	}
 	return (0);
 }

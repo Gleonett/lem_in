@@ -19,7 +19,7 @@ void		del_room(t_tbhash **room)
 	ft_memdel((void **)room);
 }
 
-void		del_room_list(t_tbhash **th, int j)
+static void	del_room_list(t_tbhash **th, int j)
 {
 	t_tbhash *i;
 	t_tbhash *back;
@@ -31,22 +31,6 @@ void		del_room_list(t_tbhash **th, int j)
 		i = i->next;
 		del_room(&back);
 	}
-}
-
-void		del_field(t_tbhash *****field, int n_r, int n_x_y[])
-{
-	int i;
-	int j;
-
-	i = n_x_y[0];
-	while (--i > -1)
-	{
-		j = n_x_y[1];
-		while (--j > -1)
-			ft_memdel((void *)&(field[0][i][j]));
-		ft_memdel((void **)&(field[0][i]));
-	}
-	ft_memdel((void **)field);
 }
 
 void		del_tables(t_tbhash ***th)
@@ -62,7 +46,7 @@ void		del_tables(t_tbhash ***th)
 	ft_memdel((void **)th);
 }
 
-void del_d_a_list(t_d_a **start)
+void		del_d_a_list(t_d_a **start)
 {
 	t_d_a	*i;
 	t_d_a	*back;
@@ -74,15 +58,4 @@ void del_d_a_list(t_d_a **start)
 		i = i->dist_ants;
 		ft_memdel((void **)&back);
 	}
-}
-
-
-void		del_mtrx(t_mtrx *mtrx)
-{
-	int i;
-
-	i = -1;
-	while (++i < mtrx->num_a_r[1])
-		ft_memdel((void **)mtrx->ways + i);
-	ft_memdel((void**)&(mtrx->ways));
 }

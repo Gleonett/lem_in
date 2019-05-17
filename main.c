@@ -12,57 +12,36 @@
 
 #include "lem_in.h"
 
-void	print_mtrx(short **mtrx, int len, int width)
+int	error(t_tbhash **th)
 {
-	int i;
-	int j;
-
-	i = -1;
-	while (++i < width)
-	{
-		printf("%3i - ", i + 1);
-		j = -1;
-		while (++j < len)
-		{
-			if (mtrx[i][j] == 0)
-				printf("");
-			else if (j + 2 == len)
-				printf("["PURPLE"%5d"REBOOT"]", mtrx[i][j]);
-			else if (j + 1 == len)
-				printf("["RED"%5d"REBOOT"]", mtrx[i][j]);
-			else
-				printf("["YELLOW"%5d"REBOOT"]", mtrx[i][j]);
-		}
-		printf("\n");
-	}
+	gc(NULL, GC_ALL, GC_DEL);
+	del_tables(&th);
+	ft_printf(RED"error"REBOOT": wrong input.\n");
+	return (1);
 }
 
-int		main(void)
+int	main(void)
 {
 	t_tbhash	**th;
 	t_mtrx		mtrx;
+	t_th_pow_p	th_p;
 	size_t		pow_p[SIZE_POW];
-	int			n_x_y[2];
 
 	mtrx.total_links = 0;
 	CH_NULL(th = (t_tbhash **)ft_memalloc(sizeof(t_tbhash *) * NUM_ROOMS));
 	power_p(pow_p);
+	th_p.pow_p = pow_p;
+	th_p.th = th;
 	mtrx.num_a_r[1] = 0;
 	mtrx.ways = NULL;
-	if (reader(th, pow_p, &mtrx) == -1 || START == NULL || FINISH ==
+	if (reader(&th_p, &mtrx) == -1 || START == NULL || FINISH ==
 	NULL || START->num_links == 0 || FINISH->num_links == 0)
-	{
-		gc(NULL, GC_ALL, GC_DEL);
-		del_tables(&th);
-		ft_printf(RED"error"REBOOT": wrong input.\n");
-		return (1);
-	}
+		return (error(th));
 	else if (mtrx.num_a_r[0] > 0)
-		bfs(th, n_x_y, mtrx);
+		bfs(th);
 	mtrx.total_links = mtrx.total_links - (short)mtrx.num_a_r[1];
 	gc(NULL, GC_ALL, GC_DEL);
 	prep_dfs(th, &mtrx, mtrx.num_a_r);
 	prep_brute_force(th, &mtrx);
 	distribution_ants(th, &mtrx);
-	return (0);
 }
