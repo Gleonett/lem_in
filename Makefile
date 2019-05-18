@@ -6,7 +6,7 @@
 #    By: gleonett <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/13 19:31:05 by gleonett          #+#    #+#              #
-#    Updated: 2019/05/13 18:58:06 by gleonett         ###   ########.fr        #
+#    Updated: 2019/05/18 18:06:55 by gleonett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,14 +14,16 @@ NAME	= lem_in
 LIB		= ft_printf
 INC		= includes
 LINC 	= ft_printf/libftprintf.a
-SRCS 	= bfs.c \
+FLAGS   =
+#-Wall -Wextra -Werror
+SRCS 	= main.c \
+		bfs.c \
 		collision.c \
 		print_ants.c \
 		valid_links.c \
 		brute_force.c \
 		sort_lvls.c \
 		del_table.c \
-		main.c \
 		valid_room.c \
 		distribution_ants.c \
 		pow_p.c \
@@ -29,11 +31,13 @@ SRCS 	= bfs.c \
 		check_comment.c \
 		init_room.c \
 		prep_stream.c \
-		sort_links.c
-RAW_OBJ		= $(SRCS:.c=.o)
+		sort_links.c \
+		create_del_str_ants.c \
+		find_num_ants.c \
+		sharp_beginning.c \
+		str_is_int.c
+RAW_OBJ	= $(SRCS:.c=.o)
 DOBJ	= obj
-FLAGS	= -Ofast
-# -Wall -Wextra -Werror
 
 OBJ = $(addprefix $(DOBJ)/,$(RAW_OBJ))
 
@@ -56,7 +60,7 @@ $(LINC):
 	@make -C $(LIB)
 
 $(NAME): $(OBJ)
-	@gcc $(LINC) $(OBJ) -o $(NAME) $(FLAGS)
+	@gcc $(FLAGS) $(LINC) $(OBJ) -o $(NAME)
 	@echo "	-Building $(GREEN)LEM_IN$(REB) is completed, $(UNDERLINE)My lord$(REB)!"
 
 $(DOBJ)/%.o : %.c
@@ -75,8 +79,8 @@ fclean: clean
 re: fclean all
 
 ez: $(OBJ)
-	@gcc -I $(INC) $(LINC) $(SRCS) -o $(NAME) $(FLAGS)
+	@gcc -I $(INC) -O $(LINC) $(SRCS) -o $(NAME)
 	@time ./$(NAME)
 
 $(DOBJ)/%.o : %.c
-	@gcc $(FLAGS) -I$(INC) -c $< -o $@
+	@gcc $(FLAGS) -I$(INC) -O  -c $< -o $@

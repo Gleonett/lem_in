@@ -63,7 +63,7 @@ static size_t	start_room(t_tbhash **links, short num)
 	return (num_dead_ends);
 }
 
-static void		finish_room(t_tbhash **links, short num)
+static void		finish_room(t_tbhash **links, short num, t_tbhash *start)
 {
 	int i;
 	int j;
@@ -71,8 +71,8 @@ static void		finish_room(t_tbhash **links, short num)
 	i = -1;
 	while (++i < num)
 	{
-		if (ft_strcmp("14", links[i]->room) == 0)
-			ft_printf("");
+		if (links[i] == start)
+			continue ;
 		j = -1;
 		while (++j < links[i]->num_links)
 			if (links[i]->links[j]->p_x == MAX_SHORT)
@@ -94,8 +94,6 @@ void			sort_links(t_tbhash **th, t_tbhash *room)
 	if (room == START)
 		room->num_links -= start_room(room->links, room->num_links);
 	if (room == FINISH)
-	{
-		finish_room(room->links, room->num_links);
-	}
+		finish_room(room->links, room->num_links, START);
 	smallest_connectivity(room->links, room->num_links);
 }

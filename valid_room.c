@@ -42,11 +42,11 @@ static int	check_and_hash(t_tbhash *room, char const *s, size_t pow_p[])
 		return (-1);
 	room->room = get_room(s, i);
 	IF_FALSE((buf = str_is_int(s + i)));
-	if ((room->x = ft_atoi(s + i)) < 0)
+	if (ft_atoi(s + i) < 0)
 		return (-1);
 	i += MOD(buf);
 	IF_FALSE((buf = str_is_int(s + i)));
-	if ((room->y = ft_atoi(s + i)) < 0)
+	if (ft_atoi(s + i) < 0)
 		return (-1);
 	i += MOD(buf);
 	IF_FALSE(skip_spaces(s, &i));

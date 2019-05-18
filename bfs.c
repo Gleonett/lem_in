@@ -39,7 +39,6 @@ static t_tbhash	*queue(t_tbhash *new_room, char add_get)
 void			add_links_queue(t_tbhash *room, t_tbhash *finish)
 {
 	short i;
-	short j;
 
 	if (room == finish)
 		return ;

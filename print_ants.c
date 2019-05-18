@@ -66,7 +66,8 @@ void	fill_s(char ***final_ways, char **str_ants, t_mtrx *mtrx)
 	init_variables(&start_list, &prnt, &last_ant, mtrx->num_ways);
 	while (1)
 	{
-		if (prnt.shift + 1 == mtrx->final_ways[0][mtrx->num_a_r[1]])
+		if (prnt.shift + 1 == mtrx->final_ways[0][mtrx->num_a_r[1]] &&
+			last_ant == mtrx->num_a_r[0])
 			break ;
 		j = -1;
 		while (++j < prnt.max_num_ways && g_ants_in_ways[j] > 0)
@@ -97,7 +98,7 @@ void	print_ants(char ***final_ways, t_mtrx *mtrx)
 	create_del_str_ants(&str_ants, mtrx->num_a_r[0], 0);
 	fill_s(final_ways, str_ants, mtrx);
 	create_del_str_ants(&str_ants, mtrx->num_a_r[0], 1);
-	write(1, g_s, (size_t)g_i);
+//	write(1, g_s, (size_t)g_i);
 	write(1, "\n", 1);
 	ft_printf(GREEN"\n%d - turns\n"REBOOT"%d - rooms\n%d - links\n"
 	RED"\nDIFFERENT = %d\n"REBOOT, g_lolololol,

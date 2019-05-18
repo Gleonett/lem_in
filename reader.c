@@ -61,11 +61,11 @@ static int	check_room(t_mtrx *mtrx, int *flag, char **line, t_th_pow_p *th_p)
 	if (*flag == 0 && valid_room(*line, th_p->th, th_p->pow_p, 0) == 1)
 	{
 		*flag += 1;
-		IF_1_RET(valid_links(th_p->th, th_p->pow_p, *line, mtrx->ways),
+		IF_1_RET(valid_links(th_p->th, th_p->pow_p, *line),
 				line, 1);
 	}
 	else if (*flag != 0)
-		IF_1_RET(valid_links(th_p->th, th_p->pow_p, *line, mtrx->ways),
+		IF_1_RET(valid_links(th_p->th, th_p->pow_p, *line),
 				line, 1);
 	return (0);
 }
@@ -90,10 +90,13 @@ int			reader(t_th_pow_p *th_p, t_mtrx *mtrx)
 			IF_1_RET(check_room(mtrx, &flag, &line, th_p), NULL, -1);
 		}
 		else
+		{
 			IF_1_RET(check_comment(&line, th_p, buf, fd), &line, -1);
+			ft_putendl(line);
+		}
 		ft_memdel((void **)&line);
 	}
 	close(fd);
-	bufcat_and_write(buf, NULL, 1);
+//	bufcat_and_write(buf, NULL, 1);
 	IF_1_RET(1, &line, 0);
 }

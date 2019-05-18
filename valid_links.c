@@ -55,7 +55,7 @@ static void	add_size(t_tbhash **room)
 	(*room)->links = arr;
 }
 
-static void	init_links(t_tbhash **room1, t_tbhash **room2, short **mtrx)
+static void	init_links(t_tbhash **room1, t_tbhash **room2)
 {
 	int i;
 
@@ -77,8 +77,7 @@ static void	init_links(t_tbhash **room1, t_tbhash **room2, short **mtrx)
 	(*room2)->links[(*room2)->num_links] = NULL;
 }
 
-int			valid_links(t_tbhash **th, size_t pow_p[], const char *s,
-		short **mtrx)
+int			valid_links(t_tbhash **th, size_t pow_p[], const char *s)
 {
 	int			ij[2];
 	int			h1;
@@ -97,6 +96,6 @@ int			valid_links(t_tbhash **th, size_t pow_p[], const char *s,
 	h2 = hash_room(pow_p, s, ij);
 	if ((room2 = find_room(th, h2, s + ij[1])) == NULL)
 		return (1);
-	init_links(&room1, &room2, mtrx);
+	init_links(&room1, &room2);
 	return (0);
 }

@@ -26,7 +26,7 @@ void	power_p(size_t pow_p[])
 size_t	power_p_more(size_t max_p, size_t i)
 {
 	const size_t	p = POW;
-	size_t			power;
+	long long int	power;
 
 	power = i - SIZE_POW;
 	while (--power > -1)

@@ -12,18 +12,6 @@
 
 #include "lem_in.h"
 
-short			**init_mtrx(int num_rooms)
-{
-	short	**x;
-	int		i;
-
-	i = -1;
-	CH_NULL(x = (short **)malloc(sizeof(short *) * num_rooms));
-	while (++i < num_rooms)
-		CH_NULL(x[i] = (short *)malloc(sizeof(short) * num_rooms));
-	return (x);
-}
-
 t_tbhash		*init_room(void)
 {
 	t_tbhash		*new;
@@ -42,8 +30,8 @@ t_tbhash		*init_room(void)
 	new->p_z = -1;
 	new->flag = -1;
 	new->num_links = 0;
-	new->x = -1;
-	new->y = -1;
+//	new->x = -1;
+//	new->y = -1;
 	new->lvl = 0;
 	return (new);
 }

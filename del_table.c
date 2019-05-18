@@ -39,8 +39,10 @@ void		del_tables(t_tbhash ***th)
 
 	i = -1;
 	while (++i < NUM_ROOMS - 2)
+	{
 		if ((*th)[i] != NULL)
 			del_room_list(*th, i);
+	}
 	(*th)[NUM_ROOMS - 2] = NULL;
 	(*th)[NUM_ROOMS - 1] = NULL;
 	ft_memdel((void **)th);
