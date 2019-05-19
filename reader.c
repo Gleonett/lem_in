@@ -86,10 +86,8 @@ int			reader(t_th_pow_p *th_p, t_mtrx *mtrx)
 		bufcat_and_write(buf, line, 0);
 		flag == 0 ? mtrx->num_a_r[1] += 1 : 0;
 		if (*line != '#')
-		{
 			IF_1_RET(check_room(mtrx, &flag, &line, th_p), NULL, -1);
-		}
-		else
+		if (*line == '#')
 		{
 			IF_1_RET(check_comment(&line, th_p, buf, fd), &line, -1);
 			ft_putendl(line);
@@ -97,6 +95,6 @@ int			reader(t_th_pow_p *th_p, t_mtrx *mtrx)
 		ft_memdel((void **)&line);
 	}
 	close(fd);
-//	bufcat_and_write(buf, NULL, 1);
+	bufcat_and_write(buf, NULL, 1);
 	IF_1_RET(1, &line, 0);
 }

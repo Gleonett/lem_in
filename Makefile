@@ -6,7 +6,7 @@
 #    By: gleonett <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/13 19:31:05 by gleonett          #+#    #+#              #
-#    Updated: 2019/05/19 17:05:40 by gleonett         ###   ########.fr        #
+#    Updated: 2019/05/19 20:05:58 by gleonett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,11 @@ SRCS 	= main.c \
 		create_del_str_ants.c \
 		find_num_ants.c \
 		sharp_beginning.c \
-		str_is_int.c
+		str_is_int.c \
+		count_turns.c \
+		short_cpy.c \
+		zero_way.c
+
 RAW_OBJ	= $(SRCS:.c=.o)
 DOBJ	= obj
 

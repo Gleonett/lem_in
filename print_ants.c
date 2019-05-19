@@ -98,7 +98,7 @@ void	print_ants(char ***final_ways, t_mtrx *mtrx)
 	create_del_str_ants(&str_ants, mtrx->num_a_r[0], 0);
 	fill_s(final_ways, str_ants, mtrx);
 	create_del_str_ants(&str_ants, mtrx->num_a_r[0], 1);
-//	write(1, g_s, (size_t)g_i);
+	write(1, g_s, (size_t)g_i);
 	write(1, "\n", 1);
 	ft_printf(GREEN"\n%d - turns\n"REBOOT"%d - rooms\n%d - links\n"
 	RED"\nDIFFERENT = %d\n"REBOOT, g_lolololol,

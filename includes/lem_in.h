@@ -41,6 +41,10 @@
 # define CGO_2 ((i->links[vars.j]->p_x > 1 || i->p_x == 0))
 # define CAN_GO_ON (i->links[vars.j]->flag != 1  && CGO_1 && CGO_2)
 # define BIG_MAP (g_ways.diff > 150 ? 1 : -1)
+# define SAME_LVL2 ((g_vars.baned_lvls)[(g_vars.ways)[i][g_vars.len]])
+# define SAME_LVL if (SAME_LVL2 == 1) ({i++; continue ;})
+# define END_BRT2 (len > (g_vars.start)->num_links || g_vars.num_ends > 5000)
+# define END_BRT if (END_BRT2) ({return (0);})
 
 /*
 **exit (255) - ошибка выделения памяти
@@ -51,6 +55,9 @@
 typedef	struct		s_tbhash
 {
 	char			*room;
+	struct s_tbhash	**links;
+	struct s_tbhash	*next;
+	struct s_tbhash	*queue_prev;
 	short			place_mtrx;
 	short			p_x;
 	short			p_y;
@@ -58,21 +65,15 @@ typedef	struct		s_tbhash
 	int				lvl;
 	short			flag;
 	short			num_links;
-	struct s_tbhash	*next;
-	struct s_tbhash	*queue_prev;
-//	int				x;
-//	int				y;
-	struct s_tbhash	**links;
 }					t_tbhash;
 
 typedef struct		s_mtrx
 {
 	short			**ways;
 	short			**final_ways;
-	short			num_ways;
-	short			*num_lvls;
 	short			*baned_lvls;
 	int				num_a_r[2];
+	short			num_ways;
 	short			total_links;
 }					t_mtrx;
 
@@ -97,9 +98,9 @@ typedef struct		s_printing
 
 typedef struct		s_for_dfs
 {
+	short			**ways;
 	int				way;
 	int				num_rooms;
-	short			**ways;
 	short			diff;
 }					t_for_dfs;
 
@@ -111,6 +112,30 @@ typedef struct		s_in_dfs
 	short			flag;
 	short			ret_fill;
 }					t_in_dfs;
+
+typedef struct		s_for_brtfrc
+{
+	short			**final_ways;
+	short			**ways;
+	short			**ret_ways;
+	short			*baned_lvls;
+	t_mtrx			*mtrx;
+	t_tbhash		*start;
+	int				len;
+	short			total_ways;
+	int				const_buf;
+	int				max_ways;
+	int				num_ends;
+}					t_for_brtfrc;
+
+typedef struct		s_in_brtfrc
+{
+	short			*line;
+	short			j;
+	int				buf;
+	short			k;
+	short			flag;
+}					t_in_brtfrc;
 
 /*
 **		MAIN
@@ -136,6 +161,7 @@ t_tbhash			*init_room(void);
 */
 int					bfs(t_tbhash **th);
 void				sort_links(t_tbhash **th, t_tbhash *room);
+void				shortcpy(short *dst, short *src, size_t len);
 /*
 **		DFS
 */
@@ -146,6 +172,7 @@ int					zero_way(int way, short ret_fill, short **ways, int len);
 */
 void				prep_brute_force(t_tbhash **th, t_mtrx *ways);
 int					shells_sort(short **tab, int size, int d, int len);
+int					count_turns(short **final_ways, t_mtrx *ways, short *k);
 /*
 **		DISTRIBUTION ANTS
 */

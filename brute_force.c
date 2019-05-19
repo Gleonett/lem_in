@@ -12,134 +12,96 @@
 
 #include "lem_in.h"
 
-static short	**g_final_ways;
-static short	**g_ways;
-static short	*g_num_lvls;
-static short	*g_baned_lvls;
-static int		g_len;
-static short	g_total_ways;
-static t_mtrx	*g_mtrx;
-static int		const_buf;
-static int		max_ways;
-static int		g_iii = 0;
-static short	**ret_ways;
-static t_tbhash	*start;
+static t_for_brtfrc g_vars;
 
-int count_turns(short **final_ways, t_mtrx *ways, short *k)
+static void	new_final_ways(t_in_brtfrc *invars)
 {
-	int buf;
-	int *dstrbtd_ants;
-
-	if (final_ways == NULL || *final_ways == NULL)
-		return (MAX_INT);
-	*k = 0;
-	while (final_ways[*k] != NULL)
-		*k += 1;
-	if ((dstrbtd_ants = find_num_ants(ways->num_a_r[0], final_ways, *k,
-									  ways->num_a_r[1])) == NULL)
-		return (MAX_INT);
-	buf = dstrbtd_ants[0] + final_ways[0][ways->num_a_r[1]];
-	ft_memdel((void **)&dstrbtd_ants);
-	return (buf);
-}
-
-void shortcpy(short *dst, short *src, size_t len)
-{
-	size_t
-
-	i = 0;
-	while (i < len)
+	g_vars.num_ends++;
+	invars->k = 0;
+	invars->buf = count_turns(g_vars.final_ways, g_vars.mtrx, &(invars->k));
+	if (invars->buf > 0 && invars->buf < g_vars.const_buf)
 	{
-		dst[i] = src[i];
-		i++;
+		g_vars.const_buf = invars->buf;
+		g_vars.max_ways = invars->k;
+		ft_memcpy(g_vars.ret_ways, g_vars.final_ways, sizeof(short *) *
+				((g_vars.start)->num_links + 1));
 	}
 }
 
-short		brute_force(short *prev_line,  short i, short len)
+static int	match_ways(t_in_brtfrc *invars, short i)
 {
-	short *line;
-	short j;
-	int buf = 0;
-	short k;
-	short flag = 0;
-
-	if (len > start->num_links || g_iii > 5000)
-		return (0);
-	CH_NULL(line = (short *)malloc(sizeof(short) * g_len));
-	while (i < g_total_ways)
-	{
-		if (g_baned_lvls[g_ways[i][g_len]] == 1)
+	while (++(invars->j) < g_vars.len)
+		if ((g_vars.ways)[i][invars->j] != 0)
 		{
-			i++;
-			continue ;
-		}
-		j = 0;
-		shortcpy(line, prev_line, (size_t)g_len);
-		while (++j < g_len)
-			if (g_ways[i][j] != 0)
-			{
-				if (line[j] != 0)
-					break ;
-				line[j] = g_ways[i][j];
-			}
-		if (j == g_len)
-		{
-			flag++;
-			g_baned_lvls[g_ways[i][g_len]] = 1;
-			g_final_ways[len] = g_ways[i];
-			brute_force(line, i + 1, len + (short)1);
-			g_final_ways[len] = NULL;
-			g_baned_lvls[g_ways[i][g_len]] = 0;
-			if (len > 0 && i > (g_total_ways * 4 > 500 ? 32 : 1))
-			{
-				ft_memdel((void **)&line);
+			if (invars->line[invars->j] != 0)
 				return (0);
-			}
+			invars->line[invars->j] = (g_vars.ways)[i][invars->j];
 		}
-		i++;
-	}
-	if (i == g_total_ways)
-	{
-		g_iii++;
-		k = 0;
-		buf = count_turns(g_final_ways, g_mtrx, &k);
-		if (buf > 0 && buf < const_buf)
-		{
-			const_buf = buf;
-			max_ways = k;
-			ft_memcpy(ret_ways, g_final_ways, sizeof(short *) *
-					(start->num_links + 1));
-		}
-	}
-	ft_memdel((void **)&line);
 	return (0);
 }
 
-void	 		prep_brute_force(t_tbhash **th, t_mtrx *ways)
+static int	backtrack(t_in_brtfrc *invars, short i, short len)
+{
+	(g_vars.final_ways)[len] = NULL;
+	(g_vars.baned_lvls)[g_vars.ways[i][g_vars.len]] = 0;
+	if (len > 0 && i > (g_vars.total_ways * 4 > 500 ? 32 : 1))
+	{
+		ft_memdel((void **)&(invars->line));
+		return (1);
+	}
+	return (0);
+}
+
+short		brute_force(short *prev_line, short i, short len)
+{
+	t_in_brtfrc invars;
+
+	invars.flag = 0;
+	END_BRT;
+	CH_NULL(invars.line = (short *)malloc(sizeof(short) * g_vars.len));
+	while (i < g_vars.total_ways)
+	{
+		SAME_LVL;
+		invars.j = 0;
+		shortcpy(invars.line, prev_line, (size_t)g_vars.len);
+		match_ways(&invars, i);
+		if (invars.j == g_vars.len)
+		{
+			invars.flag++;
+			(g_vars.baned_lvls)[(g_vars.ways)[i][g_vars.len]] = 1;
+			(g_vars.final_ways)[len] = (g_vars.ways)[i];
+			brute_force(invars.line, i + 1, len + (short)1);
+			if (backtrack(&invars, i, len) == 1)
+				return (0);
+		}
+		i++;
+	}
+	i == g_vars.total_ways ? new_final_ways(&invars) : 0;
+	ft_memdel((void **)&(invars.line));
+	return (0);
+}
+
+void		prep_brute_force(t_tbhash **th, t_mtrx *ways)
 {
 	short	*line;
 
-	ft_printf(PURPLE"NUW WAYS = %d\n"REBOOT, ways->num_ways);
-	g_total_ways = ways->num_ways > 200 ? 170 : ways->num_ways;
-	ft_printf(PURPLE"NUW WAYS = %d\n"REBOOT, g_total_ways);
-	g_ways = ways->ways;
-	g_num_lvls = ways->num_lvls;
-	g_len = ways->num_a_r[1] - 1;
-	g_final_ways = ways->final_ways;
-	g_baned_lvls = ways->baned_lvls;
-	g_mtrx = ways;
-	start = START;
-	CH_NULL(ret_ways = (short **)ft_memalloc(sizeof(short *) *
+	g_vars.total_ways = ways->num_ways > 200 ? 170 : ways->num_ways;
+	g_vars.ways = ways->ways;
+	g_vars.len = ways->num_a_r[1] - 1;
+	g_vars.final_ways = ways->final_ways;
+	g_vars.baned_lvls = ways->baned_lvls;
+	g_vars.mtrx = ways;
+	g_vars.start = START;
+	CH_NULL(g_vars.ret_ways = (short **)ft_memalloc(sizeof(short *) *
 			(START->num_links + 1)));
-	CH_NULL(line = (short *)ft_memalloc(sizeof(short) * g_len));
-	shells_sort(g_ways, ways->num_ways - 1, ways->num_ways / 2,
+	CH_NULL(line = (short *)ft_memalloc(sizeof(short) * g_vars.len));
+	shells_sort(g_vars.ways, ways->num_ways - 1, ways->num_ways / 2,
 			ways->num_a_r[1]);
-	max_ways = 0;
-	const_buf = MAX_INT;
+	g_vars.max_ways = 0;
+	g_vars.const_buf = MAX_INT;
 	brute_force(line, 0, 0);
-	ft_printf("iii = %d\n", g_iii);
-	ways->final_ways = ret_ways;
+	ways->final_ways = g_vars.ret_ways;
 	ft_memdel((void **)&line);
-	ft_memdel((void **)&g_final_ways);
-	ways->num_ways = max_ways;
+	ft_memdel((void **)&(g_vars.final_ways));
+	ways->num_ways = g_vars.max_ways;
 }

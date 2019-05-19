@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-t_for_dfs	g_ways;
+static t_for_dfs	g_ways;
 
 static int	insert_room(t_for_dfs *ways, int ret_fill, int lvl, t_tbhash *i)
 {
@@ -86,8 +86,6 @@ short		**prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2])
 	g_ways.diff = (short)(mtrx->total_links - mtrx->num_a_r[1]);
 	CH_NULL(g_ways.ways = (short **)malloc(sizeof(short *) * (num_a_r[1] * 10 +
 			1)));
-	CH_NULL(mtrx->num_lvls = (short *)ft_memalloc(sizeof(short) *
-			(num_links + 1)));
 	CH_NULL(mtrx->final_ways = (short **)ft_memalloc(sizeof(short *) *
 			(num_links)));
 	CH_NULL(mtrx->baned_lvls = (short *)ft_memalloc(sizeof(short) *
