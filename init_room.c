@@ -18,8 +18,7 @@ t_tbhash		*init_room(void)
 	static short	place;
 
 	CH_NULL(new = (t_tbhash *)malloc(sizeof(t_tbhash)));
-	CH_NULL(new->links = (t_tbhash **)malloc(sizeof(t_tbhash *) *
-			NUM_LINKS));
+	CH_NULL(new->links = (t_tbhash **)malloc(sizeof(t_tbhash *) * NUM_LINKS));
 	new->links[0] = NULL;
 	new->queue_prev = NULL;
 	new->room = NULL;
@@ -30,8 +29,6 @@ t_tbhash		*init_room(void)
 	new->p_z = -1;
 	new->flag = -1;
 	new->num_links = 0;
-//	new->x = -1;
-//	new->y = -1;
 	new->lvl = 0;
 	return (new);
 }

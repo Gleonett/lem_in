@@ -13,15 +13,17 @@
 #ifndef _LEM_IN_H
 # define _LEM_IN_H
 
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/map3"
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/lol_map"
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/map228"
-# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map"
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/rand_map_2"
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/1"
-//# define MAP "/Users/gleonett/Desktop/lem_in/maps/jest'"
-//# define NUM_ROOMS 9975
-# define NUM_ROOMS 3333
+# define PATH "/Users/gleonett/Desktop/lem-in/maps/"
+//# define MAP PATH "map3"
+//# define MAP PATH "lol_map"
+//# define MAP PATH "map228"
+//# define MAP PATH "1"
+//# define MAP PATH "jest'"
+//# define MAP PATH "rand_map"
+# define MAP PATH "rand_map_2"
+
+# define NUM_ROOMS 1111
+//# define NUM_ROOMS 3333
 # define NUM_SMBLS 1500000
 # define NUM_LINKS 100
 # define POW 127
@@ -33,8 +35,11 @@
 
 # define MOD(x) (x >= 0 ? x : x * -1)
 # define IF_1_RET(x, y, z) if (x == 1) ({ft_memdel((void **)y); return (z);})
-# define IF_FALSE(x) if (x == 0) return (-1);
+# define IF_FALSE(x) if (x == 0) ({return (-1);})
 # define IF_EQ_BRK(x, y) if (x == y) ({break ;})
+# define CGO_1 (i->links[vars.j]->p_x >= i->p_x + BIG_MAP)
+# define CGO_2 ((i->links[vars.j]->p_x > 1 || i->p_x == 0))
+# define CAN_GO_ON (i->links[vars.j]->flag != 1  && CGO_1 && CGO_2)
 # define BIG_MAP (g_ways.diff > 150 ? 1 : -1)
 
 /*
@@ -98,6 +103,15 @@ typedef struct		s_for_dfs
 	short			diff;
 }					t_for_dfs;
 
+typedef struct		s_in_dfs
+{
+	short			j;
+	short			num_links;
+	short			ret;
+	short			flag;
+	short			ret_fill;
+}					t_in_dfs;
+
 /*
 **		MAIN
 */
@@ -126,6 +140,7 @@ void				sort_links(t_tbhash **th, t_tbhash *room);
 **		DFS
 */
 short				**prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2]);
+int					zero_way(int way, short ret_fill, short **ways, int len);
 /*
 **		BRUTE FORCE
 */

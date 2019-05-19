@@ -25,7 +25,7 @@ static void	del_section(t_sections **sect)
 		ft_memdel(&(back_pnt->pointer));
 		ft_memdel((void **)&back_pnt);
 	}
-	ft_memdel((void **)&(*sect)->section_name);
+	ft_memdel((void **)&((*sect)->section_name));
 	ft_memdel((void **)sect);
 }
 
@@ -41,6 +41,7 @@ static void	del_all(t_sections **start)
 		front = front->next_section;
 		del_section(&back);
 	}
+	*start = NULL;
 }
 
 static void	find_del_section(t_sections **start, char *section)

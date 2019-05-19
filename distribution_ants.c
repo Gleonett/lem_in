@@ -101,5 +101,4 @@ void		distribution_ants(t_tbhash **th, t_mtrx *mtrx)
 	while (++i < mtrx->num_ways)
 		ft_memdel((void **)final_ways + i);
 	ft_memdel((void **)&final_ways);
-	del_tables(&th);
 }

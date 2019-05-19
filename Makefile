@@ -6,16 +6,15 @@
 #    By: gleonett <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/13 19:31:05 by gleonett          #+#    #+#              #
-#    Updated: 2019/05/18 18:06:55 by gleonett         ###   ########.fr        #
+#    Updated: 2019/05/19 17:05:40 by gleonett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	= lem_in
+NAME	= lem-in
 LIB		= ft_printf
 INC		= includes
 LINC 	= ft_printf/libftprintf.a
-FLAGS   =
-#-Wall -Wextra -Werror
+FLAGS   = -Wall -Wextra -Werror
 SRCS 	= main.c \
 		bfs.c \
 		collision.c \
@@ -47,9 +46,6 @@ GREEN		= \033[0;32m
 YELLOW		= \033[0;33m
 REB			= \033[0m
 UNDERLINE	= \033[4m
-
-run:
-	@time ./$(NAME)
 
 all: $(DOBJ) $(LINC) $(NAME)
 

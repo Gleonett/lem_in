@@ -21,37 +21,9 @@ static short	g_total_ways;
 static t_mtrx	*g_mtrx;
 static int		const_buf;
 static int		max_ways;
+static int		g_iii = 0;
 static short	**ret_ways;
 static t_tbhash	*start;
-
-int calc_lvls(short *num_lvls, int num, short **ways, int j)
-{
-	int i;
-	int k;
-	int l;
-
-	i = -1;
-	k = 1;
-	num_lvls[num - 1] = -1;
-	while (++i < num)
-	{
-		if (ways[i][j] == 0)
-			continue ;
-		if (k > 0 && ways[i][j] != 0 && k != ways[i][j])
-		{
-			l = k;
-			while (k > 1 && num_lvls[l] == 0)
-				l--;
-			num_lvls[ways[i][j]] = num_lvls[l];
-			k = ways[i][j];
-		}
-		num_lvls[ways[i][j]] += 1;
-	}
-	if (num > 0)
-		num_lvls[ways[num - 1][j] + 1] = -1;
-	i = -1;
-	return (i);
-}
 
 int count_turns(short **final_ways, t_mtrx *ways, short *k)
 {
@@ -91,10 +63,9 @@ short		brute_force(short *prev_line,  short i, short len)
 	short k;
 	short flag = 0;
 
-	if (len > start->num_links)
+	if (len > start->num_links || g_iii > 5000)
 		return (0);
 	CH_NULL(line = (short *)malloc(sizeof(short) * g_len));
-	j = 0;
 	while (i < g_total_ways)
 	{
 		if (g_baned_lvls[g_ways[i][g_len]] == 1)
@@ -107,21 +78,19 @@ short		brute_force(short *prev_line,  short i, short len)
 		while (++j < g_len)
 			if (g_ways[i][j] != 0)
 			{
-				if (line[j] == 0)
-					line[j] = g_ways[i][j];
-				else
+				if (line[j] != 0)
 					break ;
+				line[j] = g_ways[i][j];
 			}
 		if (j == g_len)
 		{
 			flag++;
 			g_baned_lvls[g_ways[i][g_len]] = 1;
-//			ft_printf("%d \n", g_ways[i][g_len]);
 			g_final_ways[len] = g_ways[i];
 			brute_force(line, i + 1, len + (short)1);
 			g_final_ways[len] = NULL;
 			g_baned_lvls[g_ways[i][g_len]] = 0;
-			if (len > 0 && i > (g_total_ways * 4 > 500 ? 32 : 1)) //32
+			if (len > 0 && i > (g_total_ways * 4 > 500 ? 32 : 1))
 			{
 				ft_memdel((void **)&line);
 				return (0);
@@ -131,6 +100,8 @@ short		brute_force(short *prev_line,  short i, short len)
 	}
 	if (i == g_total_ways)
 	{
+		g_iii++;
+		k = 0;
 		buf = count_turns(g_final_ways, g_mtrx, &k);
 		if (buf > 0 && buf < const_buf)
 		{
@@ -149,13 +120,7 @@ void	 		prep_brute_force(t_tbhash **th, t_mtrx *ways)
 	short	*line;
 
 	ft_printf(PURPLE"NUW WAYS = %d\n"REBOOT, ways->num_ways);
-	g_total_ways = ways->num_ways;
-	if (ways->num_ways > 400 && ways->num_ways < 500)
-		g_total_ways = (g_total_ways / 3);
-	else if (ways->num_ways > 499 && ways->num_ways < 1000)
-		g_total_ways = (g_total_ways / 4);
-	else if (ways->num_ways > 999)
-		g_total_ways = (g_total_ways / 8);
+	g_total_ways = ways->num_ways > 200 ? 170 : ways->num_ways;
 	ft_printf(PURPLE"NUW WAYS = %d\n"REBOOT, g_total_ways);
 	g_ways = ways->ways;
 	g_num_lvls = ways->num_lvls;
@@ -167,12 +132,12 @@ void	 		prep_brute_force(t_tbhash **th, t_mtrx *ways)
 	CH_NULL(ret_ways = (short **)ft_memalloc(sizeof(short *) *
 			(START->num_links + 1)));
 	CH_NULL(line = (short *)ft_memalloc(sizeof(short) * g_len));
-	calc_lvls(g_num_lvls, ways->num_ways, g_ways, ways->num_a_r[1] - 1);
 	shells_sort(g_ways, ways->num_ways - 1, ways->num_ways / 2,
 			ways->num_a_r[1]);
 	max_ways = 0;
 	const_buf = MAX_INT;
 	brute_force(line, 0, 0);
+	ft_printf("iii = %d\n", g_iii);
 	ways->final_ways = ret_ways;
 	ft_memdel((void **)&line);
 	ft_memdel((void **)&g_final_ways);

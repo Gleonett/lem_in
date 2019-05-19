@@ -17,7 +17,7 @@ char		*get_room(char const *s, int i)
 	int		j;
 	char	*room;
 
-	CH_NULL(room = (char *)malloc(sizeof(char) * i));
+	CH_NULL(room = (char *)ft_memalloc(sizeof(char) * i));
 	j = -1;
 	while (++j < i - 1)
 		room[j] = s[j];

@@ -44,4 +44,6 @@ int	main(void)
 	prep_dfs(th, &mtrx, mtrx.num_a_r);
 	prep_brute_force(th, &mtrx);
 	distribution_ants(th, &mtrx);
+	del_tables(&th);
+	gc(NULL, GC_ALL, GC_DEL);
 }
