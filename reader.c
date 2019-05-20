@@ -33,12 +33,12 @@ void		bufcat_and_write(char **s1, const char *s2, int flag)
 }
 
 int			prep_for_read(t_th_pow_p *th_p, char **line, int *num_ants,
-		int *flag)
+		int *flag, int fd)
 {
 	long int	b;
 	int			a;
 
-	while ((a = get_next_line(0, line)) > 0)
+	while ((a = get_next_line(fd, line)) > 0)
 	{
 		if (**line != '#')
 			break ;
@@ -78,12 +78,15 @@ static int	check_room(t_mtrx *mtrx, int *flag, char **line, t_th_pow_p *th_p)
 
 int			reader(t_th_pow_p *th_p, t_mtrx *mtrx)
 {
-	const int	fd = 0;
+//	const int	fd = 0;
+	const int	fd = open(MAP, O_RDONLY);
 	int			flag;
 	char		*line;
 
+
 	th_p->buf = (char *)malloc(sizeof(char) * NUM_SMBLS);
-	IF_1_RET(prep_for_read(th_p, &line, &(mtrx->num_a_r[0]), &flag), NULL, -1);
+	IF_1_RET(prep_for_read(th_p, &line, &(mtrx->num_a_r[0]), &flag, fd), NULL,
+			-1);
 	bufcat_and_write(&(th_p->buf), line, 0);
 	ft_memdel((void **)&line);
 	while (get_next_line(fd, &line) > 0)

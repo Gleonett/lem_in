@@ -14,7 +14,7 @@
 # define _LEM_IN_H
 
 # define PATH "/Users/gleonett/Desktop/lem-in/maps/"
-# define MAP PATH "map228"
+# define MAP PATH "error_map9"
 
 # define NUM_ROOMS 8313
 # define NUM_SMBLS 1500000
@@ -28,7 +28,7 @@
 
 # define MOD(x) (x >= 0 ? x : x * -1)
 # define IF_1_RET(x, y, z) if (x == 1) ({ft_memdel((void **)y); return (z);})
-# define IF_FALSE(x) if (x == 0) ({return (-1);})
+# define IF_FALSE(x) if (x == 0 || x == -1) ({return (-1);})
 # define IF_EQ_BRK(x, y) if (x == y) ({break ;})
 # define CGO_1 (i->links[vars.j]->p_x >= i->p_x + BIG_MAP)
 # define CGO_2 ((i->links[vars.j]->p_x > 1 || i->p_x == 0))
