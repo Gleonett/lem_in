@@ -14,16 +14,9 @@
 # define _LEM_IN_H
 
 # define PATH "/Users/gleonett/Desktop/lem-in/maps/"
-//# define MAP PATH "map3"
-//# define MAP PATH "lol_map"
-//# define MAP PATH "map228"
-//# define MAP PATH "1"
-//# define MAP PATH "jest'"
-//# define MAP PATH "rand_map"
-# define MAP PATH "rand_map_2"
+# define MAP PATH "error_map2"
 
-# define NUM_ROOMS 1111
-//# define NUM_ROOMS 3333
+# define NUM_ROOMS 8313
 # define NUM_SMBLS 1500000
 # define NUM_LINKS 100
 # define POW 127
@@ -87,6 +80,7 @@ typedef struct		s_th_pow_p
 {
 	t_tbhash		**th;
 	size_t			*pow_p;
+	char			*buf;
 }					t_th_pow_p;
 
 typedef struct		s_printing
@@ -154,7 +148,7 @@ int					collision(t_tbhash **th, int res, t_tbhash *room);
 int					check_comment(char **line, t_th_pow_p *th_p, char *buf,
 						int fd);
 int					valid_links(t_tbhash **th, size_t pow_p[], const char *s);
-void				bufcat_and_write(char *s1, const char *s2, int flag);
+void				bufcat_and_write(char **s1, const char *s2, int flag);
 t_tbhash			*init_room(void);
 /*
 **		BFS
@@ -165,7 +159,7 @@ void				shortcpy(short *dst, short *src, size_t len);
 /*
 **		DFS
 */
-short				**prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2]);
+short				prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2]);
 int					zero_way(int way, short ret_fill, short **ways, int len);
 /*
 **		BRUTE FORCE

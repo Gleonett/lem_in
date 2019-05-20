@@ -6,7 +6,7 @@
 #    By: gleonett <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/13 19:31:05 by gleonett          #+#    #+#              #
-#    Updated: 2019/05/19 20:05:58 by gleonett         ###   ########.fr        #
+#    Updated: 2019/05/20 16:01:43 by gleonett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRCS 	= main.c \
 		reader.c \
 		check_comment.c \
 		init_room.c \
-		prep_stream.c \
+		prep_dfs.c \
 		sort_links.c \
 		create_del_str_ants.c \
 		find_num_ants.c \

@@ -114,6 +114,5 @@ int				bfs(t_tbhash **th)
 	}
 	sort_links(th, START);
 	sort_links(th, FINISH);
-	ft_printf("\n");
 	return (0);
 }

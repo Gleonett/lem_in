@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-void		bufcat_and_write(char *s1, const char *s2, int flag)
+void		bufcat_and_write(char **s1, const char *s2, int flag)
 {
 	static int	i;
 	int			j;
@@ -21,11 +21,15 @@ void		bufcat_and_write(char *s1, const char *s2, int flag)
 	{
 		j = 0;
 		while (s2[j] != '\0')
-			s1[i++] = s2[j++];
-		s1[i++] = '\n';
+			(*s1)[i++] = s2[j++];
+		(*s1)[i++] = '\n';
 	}
 	else
-		write(1, s1, i);
+	{
+		write(1, *s1, i);
+		write(1, "\n", 1);
+		ft_memdel((void **)s1);
+	}
 }
 
 int			prep_for_read(int fd, char **line, int *num_ants, int *flag)
@@ -72,29 +76,24 @@ static int	check_room(t_mtrx *mtrx, int *flag, char **line, t_th_pow_p *th_p)
 
 int			reader(t_th_pow_p *th_p, t_mtrx *mtrx)
 {
-	const int	fd = open(MAP, O_RDONLY);
+	const int	fd = 0;
 	int			flag;
 	char		*line;
-	char		*buf;
 
-	buf = (char *)gc_malloc(sizeof(char) * NUM_SMBLS, "read");
+	th_p->buf = (char *)malloc(sizeof(char) * NUM_SMBLS);
 	IF_1_RET(prep_for_read(fd, &line, &(mtrx->num_a_r[0]), &flag), NULL, -1);
-	bufcat_and_write(buf, line, 0);
+	bufcat_and_write(&(th_p->buf), line, 0);
 	ft_memdel((void **)&line);
 	while (get_next_line(fd, &line) > 0)
 	{
-		bufcat_and_write(buf, line, 0);
+		bufcat_and_write(&(th_p->buf), line, 0);
 		flag == 0 ? mtrx->num_a_r[1] += 1 : 0;
 		if (*line != '#')
 			IF_1_RET(check_room(mtrx, &flag, &line, th_p), NULL, -1);
 		if (*line == '#')
-		{
-			IF_1_RET(check_comment(&line, th_p, buf, fd), &line, -1);
-			ft_putendl(line);
-		}
+			IF_1_RET(check_comment(&line, th_p, th_p->buf, fd), &line, -1);
 		ft_memdel((void **)&line);
 	}
 	close(fd);
-	bufcat_and_write(buf, NULL, 1);
 	IF_1_RET(1, &line, 0);
 }

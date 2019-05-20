@@ -40,14 +40,14 @@ int			check_comment(char **line, t_th_pow_p *th_p, char *buf, int fd)
 	{
 		if (check_comment_2(line, th_p->th, th_p->pow_p, 2) == 1)
 			return (1);
-		bufcat_and_write(buf, *line, 0);
+		bufcat_and_write(&buf, *line, 0);
 	}
 	else if (ft_strncmp(*line, "##end", (size_t)i) == 0 &&
 		skip_spaces(*line, &i) == 1)
 	{
 		if (check_comment_2(line, th_p->th, th_p->pow_p, 1) == 1)
 			return (1);
-		bufcat_and_write(buf, *line, 0);
+		bufcat_and_write(&buf, *line, 0);
 	}
 	return (0);
 }

@@ -12,10 +12,11 @@
 
 #include "lem_in.h"
 
-int	error(t_tbhash **th)
+int	error(t_th_pow_p th_p)
 {
 	gc(NULL, GC_ALL, GC_DEL);
-	del_tables(&th);
+	ft_memdel((void **)&(th_p.buf));
+	del_tables(&(th_p.th));
 	ft_printf(RED"error"REBOOT": wrong input.\n");
 	return (1);
 }
@@ -36,12 +37,13 @@ int	main(void)
 	mtrx.ways = NULL;
 	if (reader(&th_p, &mtrx) == -1 || START == NULL || FINISH ==
 	NULL || START->num_links == 0 || FINISH->num_links == 0)
-		return (error(th));
-	else if (mtrx.num_a_r[0] > 0)
-		bfs(th);
+		return (error(th_p));
+	bfs(th);
 	mtrx.total_links = mtrx.total_links - (short)mtrx.num_a_r[1];
 	gc(NULL, GC_ALL, GC_DEL);
-	prep_dfs(th, &mtrx, mtrx.num_a_r);
+	if (prep_dfs(th, &mtrx, mtrx.num_a_r) == -1)
+		return (error(th_p));
+	bufcat_and_write(&(th_p.buf), NULL, 1);
 	prep_brute_force(th, &mtrx);
 	distribution_ants(th, &mtrx);
 	del_tables(&th);

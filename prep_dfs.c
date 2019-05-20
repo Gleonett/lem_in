@@ -76,7 +76,7 @@ short		dfs(t_tbhash *i, short lvl, short len)
 	return (zero_way(g_ways.way, vars.ret_fill, g_ways.ways, i->place_mtrx));
 }
 
-short		**prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2])
+short		prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2])
 {
 	int			i;
 	const short	num_links = (short)(START->num_links + 1);
@@ -97,6 +97,7 @@ short		**prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2])
 	dfs(START, 1, 0);
 	g_ways.ways[0][START->place_mtrx] = 0;
 	mtrx->ways = g_ways.ways;
-	mtrx->num_ways = g_ways.way;
-	return (g_ways.ways);
+	if ((mtrx->num_ways = g_ways.way) < 1)
+		return (-1);
+	return (0);
 }
