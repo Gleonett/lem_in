@@ -14,7 +14,7 @@
 # define _LEM_IN_H
 
 # define PATH "/Users/gleonett/Desktop/lem-in/maps/"
-# define MAP PATH "error_map2"
+# define MAP PATH "map228"
 
 # define NUM_ROOMS 8313
 # define NUM_SMBLS 1500000

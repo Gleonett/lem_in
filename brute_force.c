@@ -102,6 +102,5 @@ void		prep_brute_force(t_tbhash **th, t_mtrx *ways)
 	brute_force(line, 0, 0);
 	ways->final_ways = g_vars.ret_ways;
 	ft_memdel((void **)&line);
-	ft_memdel((void **)&(g_vars.final_ways));
 	ways->num_ways = g_vars.max_ways;
 }

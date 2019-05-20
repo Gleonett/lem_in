@@ -25,19 +25,21 @@ int		check_null(char *way, t_printing *prnt, int *flag)
 
 int		del_prev_list(t_d_a *prev_list)
 {
+	if (prev_list == NULL)
+		return (1);
 	ft_memdel((void **)&(prev_list->dist_ants));
 	return (1);
 }
 
-void	init_i_flag(int *i, int *flag)
+void	init_i_flag(t_d_a **prev_list, int *i, int *flag)
 {
+	*prev_list = NULL;
 	*i = 1;
 	*flag = 0;
 }
 
-int		sharp_beginning(t_d_a *dist_ants, char ***final_ways, char
-**str_ants,
-		t_printing *prnt)
+int		sharp_beginning(t_d_a *dist_ants, char ***final_ways,
+		char **str_ants, t_printing *prnt)
 {
 	t_d_a	*prev_list;
 	int		i;
@@ -45,7 +47,7 @@ int		sharp_beginning(t_d_a *dist_ants, char ***final_ways, char
 	int		flag;
 
 	IF_EQUAL_RET(dist_ants, NULL, 1);
-	init_i_flag(&i, &flag);
+	init_i_flag(&prev_list, &i, &flag);
 	while (dist_ants != NULL && flag <= dist_ants->num_ants_in_turn)
 	{
 		j = dist_ants->num_ants_in_turn;

@@ -90,11 +90,13 @@ int			valid_links(t_tbhash **th, size_t pow_p[], const char *s)
 	if ((room1 = find_room(th, h1, s)) == NULL)
 		return (1);
 	if (s[ij[0]] != '-')
-		return (-1);
+		return (1);
 	ij[0] += 1;
 	ij[1] = ij[0];
 	h2 = hash_room(pow_p, s, ij);
 	if ((room2 = find_room(th, h2, s + ij[1])) == NULL)
+		return (1);
+	if (ft_strcmp(s + ij[1], s) == 0)
 		return (1);
 	init_links(&room1, &room2);
 	return (0);

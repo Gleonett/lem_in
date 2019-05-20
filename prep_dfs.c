@@ -84,12 +84,12 @@ short		prep_dfs(t_tbhash **th, t_mtrx *mtrx, int num_a_r[2])
 	g_ways.way = 0;
 	g_ways.num_rooms = num_a_r[1];
 	g_ways.diff = (short)(mtrx->total_links - mtrx->num_a_r[1]);
-	CH_NULL(g_ways.ways = (short **)malloc(sizeof(short *) * (num_a_r[1] * 10 +
-			1)));
-	CH_NULL(mtrx->final_ways = (short **)ft_memalloc(sizeof(short *) *
-			(num_links)));
-	CH_NULL(mtrx->baned_lvls = (short *)ft_memalloc(sizeof(short) *
-			(START->num_links + 1)));
+	CH_NULL(g_ways.ways = (short **)ft_memalloc(sizeof(short *) * (num_a_r[1] *
+			10 + 1)));
+	CH_NULL(mtrx->final_ways = (short **)gc_memalloc(sizeof(short *) *
+			(num_links), "dfs"));
+	CH_NULL(mtrx->baned_lvls = (short *)gc_memalloc(sizeof(short) *
+			(START->num_links + 1), "dfs"));
 	i = -1;
 	while (++i < (num_a_r[1] * 10 + 1))
 		CH_NULL((g_ways).ways[i] = (short *)ft_memalloc(sizeof(short) *

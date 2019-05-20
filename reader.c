@@ -32,15 +32,17 @@ void		bufcat_and_write(char **s1, const char *s2, int flag)
 	}
 }
 
-int			prep_for_read(int fd, char **line, int *num_ants, int *flag)
+int			prep_for_read(t_th_pow_p *th_p, char **line, int *num_ants,
+		int *flag)
 {
 	long int	b;
 	int			a;
 
-	while ((a = get_next_line(fd, line)) > 0)
+	while ((a = get_next_line(0, line)) > 0)
 	{
 		if (**line != '#')
 			break ;
+		bufcat_and_write(&(th_p->buf), *line, 0);
 		ft_memdel((void **)line);
 	}
 	if (a < 0)
@@ -81,7 +83,7 @@ int			reader(t_th_pow_p *th_p, t_mtrx *mtrx)
 	char		*line;
 
 	th_p->buf = (char *)malloc(sizeof(char) * NUM_SMBLS);
-	IF_1_RET(prep_for_read(fd, &line, &(mtrx->num_a_r[0]), &flag), NULL, -1);
+	IF_1_RET(prep_for_read(th_p, &line, &(mtrx->num_a_r[0]), &flag), NULL, -1);
 	bufcat_and_write(&(th_p->buf), line, 0);
 	ft_memdel((void **)&line);
 	while (get_next_line(fd, &line) > 0)
